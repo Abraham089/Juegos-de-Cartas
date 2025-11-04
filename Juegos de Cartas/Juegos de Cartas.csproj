@@ -12,7 +12,6 @@
     <Folder Include="Clases\" />
     <Folder Include="Clases\ClasesBlackJack\" />
     <Folder Include="Clases\ClasesUno\" />
-    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>
