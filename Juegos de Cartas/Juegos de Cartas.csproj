@@ -9,9 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Clases\" />
     <Folder Include="Clases\ClasesBlackJack\" />
-    <Folder Include="Clases\ClasesUno\" />
   </ItemGroup>
 
 </Project>
