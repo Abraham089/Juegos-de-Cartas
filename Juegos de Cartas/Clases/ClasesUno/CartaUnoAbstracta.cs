@@ -1,19 +1,12 @@
 using System;
 using Juegos_de_Cartas.Interfaces;
+using Juegos_de_Cartas.Clases.Enumeradores;
 
 namespace Juegos_de_Cartas.Clases.ClasesUno;
 
 public abstract class CartaUnoAbstracta : ICarta<int>
 {
-  public enum Colores
-  {
-    Rojo,
-    Verde,
-    Amarillo,
-    Azul,
-    Negro
-  }
-  private int _valor;
+    private int _valor;
   public virtual int Valor
   {
     get { return _valor; }

@@ -1,4 +1,5 @@
 using System;
+using Juegos_de_Cartas.Clases.Enumeradores;
 
 namespace Juegos_de_Cartas.Clases.ClasesUno;
 
