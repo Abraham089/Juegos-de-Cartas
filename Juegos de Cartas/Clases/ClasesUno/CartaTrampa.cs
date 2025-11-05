@@ -7,7 +7,7 @@ namespace Juegos_de_Cartas.Clases.ClasesUno;
 public class CartaTrampa : CartaUnoAbstracta
 {
   private readonly List<IEfectoDeCarta> _efectos;
-  public List<IEfectoDeCarta> Efectos
+  public IReadOnlyList<IEfectoDeCarta> Efectos
   {
     get { return _efectos; }
     init
@@ -16,16 +16,11 @@ public class CartaTrampa : CartaUnoAbstracta
       {
         throw new Exception("La carta trampa debe de tener un efecto");
       }
-      _efectos = value;
+      _efectos = (List<IEfectoDeCarta>)value;
     }
   }
   public CartaTrampa(int valor, Colores color, List<IEfectoDeCarta> efectos) : base(valor, color)
   {
     Efectos = efectos;
-  }
-
-  private void AnadirEfectos(IEfectoDeCarta efecto)
-  {
-      Efectos.Add(efecto);
   }
 }
