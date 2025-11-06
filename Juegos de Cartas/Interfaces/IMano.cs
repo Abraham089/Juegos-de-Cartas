@@ -2,7 +2,7 @@ using System;
 
 namespace Juegos_de_Cartas.Interfaces;
 
-public interface IMano<TMazo>
+public interface IMano<TCarta>
 {
 
 }
