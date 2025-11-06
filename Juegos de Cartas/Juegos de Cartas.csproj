@@ -8,4 +8,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Clases\ClasesUno\LogicaDeCartas\" />
+  </ItemGroup>
+
 </Project>
