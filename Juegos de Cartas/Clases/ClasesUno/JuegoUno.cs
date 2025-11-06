@@ -3,8 +3,12 @@ using Juegos_de_Cartas.Interfaces;
 
 namespace Juegos_de_Cartas.Clases.ClasesUno;
 
-public class JuegoUno : IJuegos<CartaUnoAbstracta>
+public class JuegoUno : JuegoMain<CartaUnoAbstracta>
 {
+  public JuegoUno(List<IJugadores<CartaUnoAbstracta>> jugadores, Deck<CartaUnoAbstracta> deck) : base(jugadores, deck)
+  {
+  }
+
   public void IniciarJuego()
   {
     throw new NotImplementedException();
