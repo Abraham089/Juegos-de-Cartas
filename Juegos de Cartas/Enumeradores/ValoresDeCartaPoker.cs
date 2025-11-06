@@ -14,6 +14,6 @@ public enum ValoresDeCartaPoker
     Jota = 10,
     Reina = 10,
     Rey = 10,
-    As = 11
+    As = 1
 
 }
