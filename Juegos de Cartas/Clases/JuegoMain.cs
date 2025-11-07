@@ -9,21 +9,25 @@ public abstract class JuegoMain<TCarta> where TCarta : class
   public List<IJugadores<TCarta>> Jugadores
   {
     get { return _jugadores; }
-    set { Jugadores = value; }
+    protected set { Jugadores = value; }
   }
-  //public IJugadores<TCarta> JugadorActual;
-  //Aun voy a pensar en la implementacion del jugador actual
+  protected int _indiceJugadorAcutal = 0;
+  public IJugadores<TCarta> JugadorActual
+  {
+    get { return Jugadores[_indiceJugadorAcutal]; }
+  }
+
   private Deck<TCarta> _deck;
   public Deck<TCarta> Deck
   {
     get { return _deck; }
-    set { _deck = value; }
+    protected set { _deck = value; }
   }
   private Deck<TCarta> _cartasUsadas;
   public Deck<TCarta> CartasUsadas
   {
     get { return _cartasUsadas; }
-    set { _cartasUsadas = value; }
+    protected set { _cartasUsadas = value; }
   }
   protected int _sentido = 1;
 
