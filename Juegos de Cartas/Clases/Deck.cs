@@ -18,6 +18,11 @@ public class Deck<ICarta> : IDeck<ICarta> where ICarta : class
         _cartas = new List<ICarta>();
         _random = new Random();
     }
+    public Deck(IEnumerable<ICarta> cartas)
+    : this()
+    {
+        _cartas.AddRange(cartas);
+    }
 
     public void AgregarCarta(ICarta carta)
     {
@@ -60,5 +65,10 @@ public class Deck<ICarta> : IDeck<ICarta> where ICarta : class
         ICarta carta = _cartas[0];
         _cartas.RemoveAt(0);
         return carta;
+    }
+
+    internal void Barajear()
+    {
+        throw new NotImplementedException();
     }
 }

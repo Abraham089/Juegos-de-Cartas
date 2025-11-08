@@ -1,0 +1,62 @@
+using System;
+using Juegos_de_Cartas.Interfaces;
+using Juegos_de_Cartas.Clases.Enumeradores;
+using Juegos_de_Cartas.Enumeradores;
+
+namespace Juegos_de_Cartas.Clases.ClasesBlackJack;
+
+public class CartaJack : ICartaPoker
+{
+    public ValoresDeCartaPoker Valor { get; private set; }
+    public Figuras Figura { get; private set; }
+    public Colores Color { get; private set; }
+
+    public CartaJack(ValoresDeCartaPoker valor, Figuras figura)
+    {
+        Valor = valor;
+        Figura = figura;
+        Color = figura == Figuras.Corazones || figura == Figuras.Diamantes ? Colores.Rojo : Colores.Negro;
+                 
+    }
+
+    public int ObtenerValorNumerico(bool asAsOnce = false)
+    {
+        if (Valor == ValoresDeCartaPoker.As)
+        {
+            return asAsOnce ? 1 : 11;
+        }
+       if (Valor == ValoresDeCartaPoker.Jota|| Valor == ValoresDeCartaPoker.Reina|| Valor == ValoresDeCartaPoker.Rey)
+       {
+           return 10;
+       }
+       return (int)Valor;
+    }
+
+    public string ObtenerDescripcionDeCarta()
+    {
+        return $"{Valor} de {Figura} ({Color})";
+    }
+
+    public bool EsCartaJugable(ICarta<ValoresDeCartaPoker> carta)
+    {
+        return carta is CartaJack;
+    }
+     public override bool Equals(object? obj)
+        {
+            if (obj is CartaJack otra)
+            {
+                return Valor == otra.Valor && Figura == otra.Figura;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Valor, Figura);
+        }
+
+        public override string ToString()
+        {
+            return  ObtenerDescripcionDeCarta();
+        }
+}
