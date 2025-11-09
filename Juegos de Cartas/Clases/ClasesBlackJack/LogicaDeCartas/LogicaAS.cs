@@ -15,10 +15,15 @@ public class LogicaAS : IlogicaValoresCartasAs
 
     public int CalcularValor(ICarta<int> carta, IDeck<ICarta<int>> mano, int ValorDelaMano)
     {
-          if (AplicarLogica(carta))
+        if (!AplicarLogica(carta))
         {
-            throw new NotImplementedException();
+             return carta.Valor;
         }
+            if (mano is IMano<ICarta<int>> manoConAs)
+            {
+                return MasDeUnAsEnMano(manoConAs, ValorDelaMano);
+            }
+        
         var valores = ObtenerValores(carta);
         return SeleccionarMejorValor(valores, ValorDelaMano);
     }
@@ -31,14 +36,15 @@ public class LogicaAS : IlogicaValoresCartasAs
     public int SeleccionarMejorValor(int[] ValoresPosibles, int ValorActualMano)
     {
         const int limite = 21;
-        const int valorMenor = 1;
-        const int valorMayor = 11;
-
-        if (ValorActualMano + valorMayor <= limite)
+        var mejorValor = ValoresPosibles.OrderByDescending(v => v);
+        foreach (var V in mejorValor)
         {
-            return valorMayor;
+            if (ValorActualMano + V <= limite)
+            {
+                return V;
+            }
         }
-        return valorMenor;
+        return ValoresPosibles.Min();
     }
 
     public int MasDeUnAsEnMano(IMano<ICarta<int>> mano, int ValorDelaMano)
@@ -49,17 +55,17 @@ public class LogicaAS : IlogicaValoresCartasAs
             return ValorDelaMano;
         }
         int ValorMejorAs = ValorDelaMano;
-        int NunAses = 0;
+       
         for (int i = 0; i < contadorAs; i++)
         {
             if (ValorMejorAs + 11 <= 21)
             {
                 ValorMejorAs += 10;
-                NunAses++;
+             
             }
             else
             {
-                ValorMejorAs += 1;
+              break;
             }
         }
         return ValorMejorAs;
