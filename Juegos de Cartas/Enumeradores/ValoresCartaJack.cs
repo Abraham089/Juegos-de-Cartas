@@ -1,6 +1,6 @@
 namespace Juegos_de_Cartas.Enumeradores;
 
-public enum ValoresDeCartaPoker
+public enum ValoresCartaJack
 {
     Dos = 2,
     Tres = 3,

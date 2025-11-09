@@ -5,13 +5,13 @@ using Juegos_de_Cartas.Enumeradores;
 
 namespace Juegos_de_Cartas.Clases.ClasesBlackJack;
 
-public class CartaJack : ICartaPoker
+public class CartaJack : ICartaJack
 {
-    public ValoresDeCartaPoker Valor { get; private set; }
+    public ValoresCartaJack Valor { get; private set; }
     public Figuras Figura { get; private set; }
     public Colores Color { get; private set; }
 
-    public CartaJack(ValoresDeCartaPoker valor, Figuras figura)
+    public CartaJack(ValoresCartaJack valor, Figuras figura)
     {
         Valor = valor;
         Figura = figura;
@@ -21,11 +21,11 @@ public class CartaJack : ICartaPoker
 
     public int ObtenerValorNumerico(bool asAsOnce = false)
     {
-        if (Valor == ValoresDeCartaPoker.As)
+        if (Valor == ValoresCartaJack.As)
         {
             return asAsOnce ? 1 : 11;
         }
-       if (Valor == ValoresDeCartaPoker.Jota|| Valor == ValoresDeCartaPoker.Reina|| Valor == ValoresDeCartaPoker.Rey)
+       if (Valor == ValoresCartaJack.Jota|| Valor == ValoresCartaJack.Reina|| Valor == ValoresCartaJack.Rey)
        {
            return 10;
        }
@@ -37,7 +37,7 @@ public class CartaJack : ICartaPoker
         return $"{Valor} de {Figura} ({Color})";
     }
 
-    public bool EsCartaJugable(ICarta<ValoresDeCartaPoker> carta)
+    public bool EsCartaJugable(ICarta<ValoresCartaJack> carta)
     {
         return carta is CartaJack;
     }
