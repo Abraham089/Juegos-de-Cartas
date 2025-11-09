@@ -20,7 +20,7 @@ public class LogicaDeCartasFiguras : ILogicaValorCartaFijas
     {
         if (!AplicarLogica(carta))
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("La carta no es una figura.");
         }
         return ValorCarta;
     }
@@ -51,23 +51,26 @@ public class LogicaDeCartasFiguras : ILogicaValorCartaFijas
     }
     public string Figuras(ICarta<int> carta)
     {
-        if (!AplicarLogica(carta))
-        {
-            throw new NotImplementedException("La carta no es una figura.");
-        }
-        if (EsJota(carta))
-        {
-            return "Jota";
-        }
-        if (EsReina(carta))
-        {
-            return "Reina";
-        }
-        if (EsRey(carta))
-        {
-            return "Rey";
-        }
-        return "Diez";
+          if (!AplicarLogica(carta))
+    {
+        throw new ArgumentException("La carta no es una figura.");
+    }
+    
+    if (EsJota(carta))
+    {
+        return "Jota";
+    }
+    if (EsReina(carta))
+    {
+        return "Reina";
+    }
+    if (EsRey(carta))
+    {
+        return "Rey";
+    }
+    
+  
+    throw new InvalidOperationException("Carta identificada como figura pero no reconocida como J, Q o K");
     }
     
 }
