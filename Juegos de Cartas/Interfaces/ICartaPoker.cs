@@ -1,0 +1,15 @@
+using System;
+using Juegos_de_Cartas.Clases.Enumeradores;
+using Juegos_de_Cartas.Enumeradores;
+
+namespace Juegos_de_Cartas.Interfaces;
+
+public interface ICartaPoker : ICarta<ValoresDeCartaPoker>
+{
+    Figuras Figura { get; }
+    Colores Color { get; }
+    int ObtenerValorNumerico(bool asAsOnce = false);
+}
+
+
+
