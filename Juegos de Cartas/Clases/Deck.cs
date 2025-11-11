@@ -5,7 +5,11 @@ namespace Juegos_de_Cartas.Clases;
 
 public class Deck<ICarta> : IDeck<ICarta> where ICarta : class
 {
-    private readonly List<ICarta> _cartas;
+    private List<ICarta> _cartas;
+    public List<ICarta> Cartas
+  {
+    get { return _cartas; }
+  }
     
     private readonly Random _random;
 
