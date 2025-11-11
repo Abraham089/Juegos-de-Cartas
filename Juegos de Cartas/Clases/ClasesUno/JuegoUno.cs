@@ -59,20 +59,25 @@ public class JuegoUno : JuegoMain<CartaUnoAbstracta>
 
   public static bool SePuedeJugar(CartaUnoAbstracta cartaJugada, CartaUnoAbstracta cartaEncima)
   {
-    bool jugable = true;
-    if (cartaJugada.Color != cartaEncima.Color && cartaJugada.Color != Enumeradores.Colores.Negro)
+    if (cartaJugada.Color == Enumeradores.Colores.Negro)
     {
-      jugable = false;
-    }
-    if(cartaJugada is CartaNormal && cartaEncima is CartaNormal)
-    {
-      if(cartaJugada.Valor != cartaEncima.Valor)
-      {
-        return false;
-      }
+        return true;
     }
 
-    return jugable;
+    if (cartaJugada.Color == cartaEncima.Color)
+    {
+        return true;
+    }
+
+    if (cartaJugada is CartaNormal cartaJ && cartaEncima is CartaNormal cartaE)
+    {
+        if (cartaJ.Valor == cartaE.Valor)
+        {
+            return true;
+        }
+    }
+
+    return false;
   }
   public void AplicarEfectos(CartaUnoAbstracta carta)
   {
