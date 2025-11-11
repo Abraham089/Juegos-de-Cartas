@@ -5,9 +5,36 @@ using Juegos_de_Cartas.Interfaces;
 
 public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : class
 {
-    public string Nombre { get;  private set; }
+    public string Nombre {
+        get
+        {
+            return Nombre;
+        }
+        private set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new Exception(message: "El nombre no puede ser nulo o vacío.");
+            }
+            Nombre = value;
+        }
+         }
 
-    public IMano<TCarta> Mano { get; private set; }
+    public IMano<TCarta> Mano
+    {
+        get
+        {
+            return Mano;
+        } 
+        private set
+        {
+            if (value == null)
+            {
+                throw new Exception(message: "La mano no puede ser nula.");
+            }
+            Mano = value;
+        }
+    }
 
     public int Puntos { get; private set; }
 
@@ -31,7 +58,11 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
 
     public TCarta JugarCarta()
     {
-        throw new NotImplementedException();
+        if (carta == null)
+        {
+            throw new Exception(message: "la carta no puede ser nula");
+        }
+        Mano.AgregarCarta(carta);
     }
 
     public virtual void NuevaMano()
@@ -50,7 +81,10 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
 
     public void RecibirCarta(TCarta carta)
     {
-        if (carta == null) throw new ArgumentNullException(nameof(carta));
+        if (carta == null)
+        {
+            throw new Exception(message: "la carta no puede ser nula");
+        }
         Mano.AgregarCarta(carta);
     }
 }

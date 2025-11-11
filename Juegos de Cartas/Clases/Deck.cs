@@ -6,16 +6,48 @@ namespace Juegos_de_Cartas.Clases;
 public class Deck<ICarta> : IDeck<ICarta> where ICarta : class
 {
     private List<ICarta> _cartas;
-    public List<ICarta> Cartas
-  {
-    get { return _cartas; }
-  }
-    
-    private readonly Random _random;
 
-    public int CantidadCartas => _cartas.Count;
+public List<ICarta> Cartas
+    {
+        get
+        {
+            return _cartas;
+        }
+        set
+        {
+            if (value == null)
+            {
+                throw new Exception(message: "la coleccion de cartas no puede ser nula");
+            }
+            _cartas = value;
+        }
+    }
+    private Random _random;
+  
 
-    public bool EstaVacio => _cartas.Count == 0;
+    public int CantidadCartas
+    {
+        get { return _cartas.Count; }
+        set
+        {
+            if (value < 0)
+            {
+                throw new Exception(message: "La cantidad de cartas no puede ser negativa");
+            }
+
+        }
+    }
+
+    public bool EstaVacio
+    {
+        get { return _cartas.Count == 0; }
+        set { 
+            if (value != (_cartas.Count == 0))
+            {
+                throw new Exception(message: "No se puede establecer EstaVacio directamente");
+            }
+        }
+    }
 
     public Deck()
     {
@@ -30,13 +62,19 @@ public class Deck<ICarta> : IDeck<ICarta> where ICarta : class
 
     public void AgregarCarta(ICarta carta)
     {
-        if (carta == null) throw new ArgumentNullException(nameof(carta));
+        if (carta == null)
+        {
+            throw new Exception(message: "la carta no puede ser nula");
+        }
         _cartas.Add(carta);
     }
 
     public void AgregarCartas(IEnumerable<ICarta> cartas)
     {
-        if (cartas == null) throw new ArgumentNullException(nameof(cartas));
+        if (cartas == null)
+        {
+            throw new Exception(message: "la coleccion de cartas no puede ser nula");
+        }
         _cartas.AddRange(cartas);
     }
 

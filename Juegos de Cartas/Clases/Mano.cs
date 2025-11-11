@@ -5,24 +5,56 @@ using Juegos_de_Cartas.Interfaces;
 
 public class Mano<TCarta> : IMano<TCarta> where TCarta : class
 {
-    private readonly List<TCarta> _cartas;
+    private List<TCarta> _cartas = new List<TCarta>();
 
-    public int CantidadCartas => _cartas.Count;
+    public List<TCarta> CartasLista
+    {
+         get
+        {
+            return _cartas;
+        }
+        set
+        {
+            if (value == null)
+            {
+                throw new Exception(message: "La lista de cartas no puede ser nula.");
+            }
+            _cartas = value;
+        }
+    }
 
-    public bool EstaVacio => _cartas.Count == 0;
+    public int CantidadCartas
+    {
+        get { return _cartas.Count; }
+    }
 
-    public IReadOnlyList<TCarta> Cartas => _cartas.AsReadOnly();
+    public bool EstaVacio
+    {
+        get { return _cartas.Count == 0; }
+    }
 
+    public IReadOnlyList<TCarta> Cartas
+    {
+        get { return _cartas.AsReadOnly(); }
+        private set
+        {
+            if (value == null)
+            {
+                throw new Exception(message: "La lista de cartas no puede ser nula.");
+            }
+            _cartas = value.ToList();
+        }
+    }
     public Mano()
     {
-        _cartas = new List<TCarta>();
+        CartasLista = new List<TCarta>();
     }
 
     public void AgregarCarta(TCarta carta)
     {
         if (carta == null)
         {
-            throw new ArgumentNullException(nameof(carta), "La carta no puede ser nula.");
+            throw new Exception(message: "la carta no puede ser nula");
         }
         _cartas.Add(carta);
     }
@@ -45,7 +77,7 @@ public class Mano<TCarta> : IMano<TCarta> where TCarta : class
     {
         if (carta == null)
         {
-            throw new ArgumentNullException(nameof(carta), "La carta no puede ser nula.");
+            throw new Exception(message: "la carta no puede ser nula");
         }
         _cartas.Remove(carta);
     }
