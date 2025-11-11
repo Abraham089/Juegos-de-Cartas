@@ -5,8 +5,13 @@ namespace Juegos_de_Cartas.Clases.ClasesBlackJack.Efectos;
 
 public class LogicaAS : IlogicaValoresCartasAs
 {
-    public string TipoDeCarta => "As";
-    private readonly int[] _valoresPosibles = { 1, 11 };
+    public string TipoDeCarta
+    {
+        get { return "As"; }
+    }
+    private int[] _valoresPosibles =  { 1, 11 };
+
+
 
     public bool AplicarLogica(ICarta<int> carta)
     {
@@ -19,13 +24,11 @@ public class LogicaAS : IlogicaValoresCartasAs
         {
              return carta.Valor;
         }
-            if (mano is IMano<ICarta<int>> manoConAs)
-            {
-                return MasDeUnAsEnMano(manoConAs, ValorDelaMano);
-            }
-        
-        var valores = ObtenerValores(carta);
-        return SeleccionarMejorValor(valores, ValorDelaMano);
+        if (ValorDelaMano + 11 <= 21)
+        {
+            return 11;
+        }
+        return 1;
     }
 
     public int[] ObtenerValores(ICarta<int> carta)
@@ -36,15 +39,11 @@ public class LogicaAS : IlogicaValoresCartasAs
     public int SeleccionarMejorValor(int[] ValoresPosibles, int ValorActualMano)
     {
         const int limite = 21;
-        var mejorValor = ValoresPosibles.OrderByDescending(v => v);
-        foreach (var V in mejorValor)
+       if(ValorActualMano + 11 <= limite)
         {
-            if (ValorActualMano + V <= limite)
-            {
-                return V;
-            }
+            return 11;
         }
-        return ValoresPosibles.Min();
+        return 1;
     }
 
     public int MasDeUnAsEnMano(IMano<ICarta<int>> mano, int ValorDelaMano)

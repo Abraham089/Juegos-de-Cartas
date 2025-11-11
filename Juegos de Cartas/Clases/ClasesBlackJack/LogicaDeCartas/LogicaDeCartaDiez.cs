@@ -5,9 +5,15 @@ namespace Juegos_de_Cartas.Clases.ClasesBlackJack.LogicaDeCartas;
 
 public class LogicaDeCartaDiez : ILogicaValorCartaFijas
 {
-    public int ValorCarta => 10;
+    public int ValorCarta
+    {
+        get { return 10; }
+    }
 
-    public string TipoDeCarta => "Diez";
+    public string TipoDeCarta
+    {
+        get { return "Diez"; }
+    }
 
     public bool AplicarLogica(ICarta<int> carta)
     {
@@ -18,15 +24,12 @@ public class LogicaDeCartaDiez : ILogicaValorCartaFijas
     {
         if (!AplicarLogica(carta))
         {
-            throw new NotImplementedException("La carta no es un diez.");
+            throw new Exception(message: "La carta no es un diez.");
         }
         return ValorCarta;
     }
       private bool EsDiez(ICarta<int> carta)
     {
-        if (carta.Valor != 10) return false;
-        
-        var descripcion = carta.ToString()?.ToLowerInvariant() ?? "";
-        return descripcion.Contains("10") || descripcion.Contains("diez");
+        return carta.Valor == 10;
     }
 }

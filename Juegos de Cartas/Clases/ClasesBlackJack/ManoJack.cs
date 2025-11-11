@@ -9,33 +9,74 @@ namespace Juegos_de_Cartas.Clases.ClasesBlackJack;
 
 public class ManoJack : Mano<ICartaJack>
 {
-    private readonly IPuntosJack _puntosJack;
-    private readonly IEstadosJack _estadosJack;
-    private readonly IResetMano _resetMano;
+    private IPuntosJack? _puntosJack;
 
-    public ManoJack(IPuntosJack puntosJack, IEstadosJack estadosJack, IResetMano resetMano)
+    public IPuntosJack? PuntosJack
     {
-        _puntosJack = puntosJack ?? throw new ArgumentNullException(nameof(puntosJack));
-        _estadosJack = estadosJack ?? throw new ArgumentNullException(nameof(estadosJack));
-        _resetMano = resetMano ?? throw new ArgumentNullException(nameof(resetMano));
+        get { return _puntosJack; }
+        private set
+        {
+            if (value == null)
+            {
+                throw new Exception("PuntosJack no puede ser null");
+            }
+            _puntosJack = value;
+        }
+    }
+
+    private IEstadosJack? _estadosJack;
+    public IEstadosJack? EstadosJack
+    {
+        get { return _estadosJack; }
+        private set
+        {
+            if (value == null)
+            {
+                throw new Exception("EstadosJack no puede ser null");
+            }
+            _estadosJack = value;
+        }
+    }
+
+    private IResetMano?  _resetMano;
+        public IResetMano?  ResetMano
+        {
+            get { return _resetMano; }
+            private set
+            {
+                if (value == null)
+                {
+                    throw new Exception("ResetMano no puede ser null");
+                }
+                _resetMano = value;
+            }
+        }
+
+    public ManoJack(IPuntosJack? puntosJack, IEstadosJack? estadosJack, IResetMano? resetMano)
+    {
+
+    PuntosJack = puntosJack;
+    EstadosJack = estadosJack;
+    ResetMano = resetMano;
+
     }
 
 
     public int CalcularPuntos()
     {
-        return _puntosJack.CalcularPuntos(Cartas);
+        return _puntosJack!.CalcularPuntos(Cartas);
     }
     public bool EsBlackjack()
     {
-        return _estadosJack.EsBlackjack(Cartas, CantidadCartas);
+        return _estadosJack!.EsBlackjack(Cartas, CantidadCartas);
     }
     public bool SePaso()
     {
-        return _estadosJack.SePaso(Cartas);
+        return _estadosJack!.SePaso(Cartas);
     }
     public string ObtenerDescripcionCompleta()
     {
-    return _resetMano.FormatearDescripcionCompleta(Cartas);
+    return _resetMano!.FormatearDescripcionCompleta(Cartas);
     }
 
 }

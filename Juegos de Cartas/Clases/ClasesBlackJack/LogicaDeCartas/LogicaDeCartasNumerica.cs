@@ -6,9 +6,19 @@ namespace Juegos_de_Cartas.Clases.ClasesBlackJack.LogicaDeCartas;
 
 public class LogicaDeCartasNumerica : ILogicaValorCartaFijas
 {
-    public int ValorCarta => throw new NotImplementedException("Las cartas numericas no tienen un valor fijo.");
+    public int ValorCarta 
+    {
+        get
+        {
+            throw new Exception(message: "El valor de la carta numerica depende de la carta especifica.");
+        }
+    }
 
-    public string TipoDeCarta => "Numerica";
+    public string TipoDeCarta
+    {
+        get { return "Numerica"; }
+        
+    }
 
     public bool AplicarLogica(ICarta<int> carta)
     {
@@ -19,7 +29,7 @@ public class LogicaDeCartasNumerica : ILogicaValorCartaFijas
     {
         if (!AplicarLogica(carta))
         {
-            throw new NotImplementedException("La carta no es numerica.");
+            throw new Exception(message: "La carta no es numerica.");
         }
         return carta.Valor;
     }
@@ -32,15 +42,22 @@ public class LogicaDeCartasNumerica : ILogicaValorCartaFijas
     {
         if (!AplicarLogica(carta))
         {
-            throw new NotImplementedException("La carta no es numerica.");
+            throw new Exception(message: "La carta no es numerica.");
         }
-        return carta.Valor switch
+        if (carta.Valor >= 2 && carta.Valor <= 6)
         {
-            2 or 3 or 4 or 5 or 6 => "Baja",
-            7 or 8 => "Media",
-            9  => "Alta",
-            _ => throw new NotImplementedException("Valor de carta numerica no reconocido.")
-        };
+            return "Baja";
+        }
+
+        if (carta.Valor == 7 || carta.Valor == 8)
+        {
+            return "Media";
+        }
+        if (carta.Valor == 9)
+        {
+            return "Alta";
+        }
+        throw new Exception(message: "La carta no es numerica.");
     }
     public bool EsCartaBaja(ICarta<int> carta)
     {

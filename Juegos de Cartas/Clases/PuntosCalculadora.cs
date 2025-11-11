@@ -10,15 +10,37 @@ public abstract class PuntosCalculadora<ICarta> : IPuntosCalculadora<ICarta> whe
 {
     public virtual int CalcularPuntos(IEnumerable<ICarta> cartas)
     {
-        if (cartas == null || !cartas.Any()) return 0;
+        if (cartas == null)
+        {
+            throw new Exception(message: "La coleccion de cartas no puede ser nula.");
+        }
+       bool tieneCartas = ContarCartas(cartas) > 0;
+        if (!tieneCartas)
+        {
+            return 0;
+        }
 
-        return cartas.Sum(carta => ObtenerValorCarta(carta));
+        int puntosTotales = 0;
+        foreach (var carta in cartas)
+        {
+            puntosTotales += ObtenerValorCarta(carta);
+        }
+        return puntosTotales;
     }
     protected abstract int ObtenerValorCarta(ICarta carta);
 
     protected virtual int ContarCartas(IEnumerable<ICarta> cartas)
     {
-        return cartas?.Count() ?? 0;
+      if (cartas == null)
+        {
+            throw new Exception(message: "La coleccion de cartas no puede ser nula.");
+        }
+        int contador = 0;
+        foreach (var carta in cartas)
+        {
+            contador++;
+        }
+        return contador;
     }
     
 }

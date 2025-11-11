@@ -12,6 +12,7 @@ public class ResetMano : Resetmano<ICartaJack>, IResetMano
       public ResetMano(IPuntosJack calculadoraPuntos, IEstadosJack evaluadorEstados) 
         : base(calculadoraPuntos, evaluadorEstados)
     {
+        
     }
 
     public string FormatearDescripcionCompleta(IEnumerable<ICartaJack> cartas)
@@ -25,13 +26,21 @@ public class ResetMano : Resetmano<ICartaJack>, IResetMano
         var puntosJack = (IPuntosJack)_calculadoraPuntos;
 
         if (estadosJack.EsBlackjack(cartas, cartas.Count))
+        {
             return "blackjack";
-        
-        if (estadosJack.SePaso(cartas))
+        }
+
+       else if (estadosJack.SePaso(cartas))
+        {
             return "se paso";
+        }
+        
         
         if (puntosJack.EsManoSuave(cartas))
+        {
             return "Mano Suave";
+        }
+   
 
         return "";
     }

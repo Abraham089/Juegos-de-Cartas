@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Intrinsics.Arm;
+using System.Security.Cryptography.X509Certificates;
 using Juegos_de_Cartas.Enumeradores;
 using Juegos_de_Cartas.Interfaces;
 
@@ -11,27 +13,55 @@ public class PuntosJack : PuntosCalculadora<ICartaJack>, IPuntosJack
 
     public bool EsManoSuave(IEnumerable<ICartaJack> cartas)
     {
-        if (!cartas.Any(c => c.Valor == ValoresCartaJack.As)) return false;
-        
-        var cartasList = cartas.ToList();
-        var ases = ContarAses(cartasList);
-        var puntosBase = cartasList.Where(c => c.Valor != ValoresCartaJack.As).Sum(c => ObtenerValorCarta(c));
-        
-        return puntosBase + 1 * (ases - 1) + 11 <= 21;
+
+        bool tieneAs = false;
+        foreach (var carta in cartas)
+        {
+            if (carta.Valor == ValoresCartaJack.As)
+            {
+                tieneAs = true;
+                break;
+            }
+        }
+        if (!tieneAs)
+        {
+            return false;
+        }
+        var puntosBase = 0;
+        var AsesContados = ContarAses(cartas);
+        foreach (var carta in cartas)
+        {
+            if (carta.Valor != ValoresCartaJack.As)
+            {
+                puntosBase += ObtenerValorCarta(carta);
+            }
+        }
+        return  puntosBase + 1 * (AsesContados - 1) + 11 <= 21;
     }
 
     public int ContarAses(IEnumerable<ICartaJack> cartas)
     {
-        return cartas.Count(c => c.Valor == ValoresCartaJack.As);
+        return cartas.Count(card => card.Valor == ValoresCartaJack.As);
     }
 
     public int CalcularPuntos(ICollection<ICartaJack> cartas)
     {
-       if (cartas == null || !cartas.Any()) return 0;
 
-        var cartasList = cartas.ToList();
+        if (cartas == null || cartas.Count == 0)
+        {
+            return 0;
+        }
+
+        var cartasList = cartas;
         var ases = ContarAses(cartasList);
-        var puntosBase = cartasList.Where(c => c.Valor != ValoresCartaJack.As).Sum(c => ObtenerValorCarta(c));
+        var puntosBase = 0;
+        foreach (var carta in cartasList)
+        {
+            if (carta.Valor != ValoresCartaJack.As)
+            {
+                puntosBase += ObtenerValorCarta(carta);
+            }
+        }
 
         return CalcularConAses(puntosBase, ases);
     }
@@ -39,21 +69,40 @@ public class PuntosJack : PuntosCalculadora<ICartaJack>, IPuntosJack
 
     protected override int ObtenerValorCarta(ICartaJack carta)
     {
-        return carta.Valor switch
+       if (carta.Valor == ValoresCartaJack.As)
         {
-            ValoresCartaJack.As => 1,
-            ValoresCartaJack.Jota or ValoresCartaJack.Reina or ValoresCartaJack.Rey => 10,
-            >= ValoresCartaJack.Dos and <= ValoresCartaJack.Diez => (int)carta.Valor,
-            _ => throw new InvalidOperationException($"Valor no reconocido: {carta.Valor}")
-        };
+            return 1;
+        }
+        if (carta.Valor >= ValoresCartaJack.Jota || carta.Valor >= ValoresCartaJack.Reina || carta.Valor >= ValoresCartaJack.Rey)
+        {
+            return 10;
+        }
+        if (carta.Valor >= ValoresCartaJack.Dos && carta.Valor <= ValoresCartaJack.Diez)
+        {
+            return (int)carta.Valor;
+        }
+        throw new Exception( message: "Valor de carta no reconocido.");   
+       
     }
 
     private int CalcularConAses(int puntosBase, int cantidadAses)
     {
-        if (cantidadAses == 0) return puntosBase;
+       if (cantidadAses == 0)
+        {
+            return puntosBase;
+        }
 
-        int conAsAlto = puntosBase + 11 + (cantidadAses - 1) * 1;
-        return conAsAlto <= 21 ? conAsAlto : puntosBase + cantidadAses * 1;
+        var puntosConUnAsOnce = puntosBase + 11 + (cantidadAses - 1) * 1;
+        
+        if (puntosConUnAsOnce <= 21)
+        {
+            return puntosConUnAsOnce;
+        }
+        else 
+        {
+            return puntosBase + cantidadAses * 1;
+        }   
+    
     }
     
 }

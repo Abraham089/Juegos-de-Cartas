@@ -1,76 +1,62 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Versioning;
+using Juegos_de_Cartas.Enumeradores;
 using Juegos_de_Cartas.Interfaces;
 
 namespace Juegos_de_Cartas.Clases.ClasesBlackJack.LogicaDeCartas;
 
 public class LogicaDeCartasFiguras : ILogicaValorCartaFijas
 {
-    public int ValorCarta => 10;
+    public int ValorCarta 
+    {
+        get { return 10; }
+    }
 
-    public string TipoDeCarta => "Figura";
+    public string TipoDeCarta
+    {
+        get { return "Figura"; }
+    }
 
     public bool AplicarLogica(ICarta<int> carta)
     {
-        return EsFigura(carta);
+        if (carta is ICartaJack cartaJack)
+        {
+            return cartaJack.Valor == ValoresCartaJack.Jota || cartaJack.Valor == ValoresCartaJack.Reina || cartaJack.Valor == ValoresCartaJack.Rey;
+        }
+        return false;
     }
 
     public int CalcularValor(ICarta<int> carta, IDeck<ICarta<int>> mano, int ValorDelaMano)
     {
         if (!AplicarLogica(carta))
         {
-            throw new NotImplementedException("La carta no es una figura.");
+            throw new Exception(message: "La carta no es una figura.");
         }
         return ValorCarta;
     }
-    private bool EsFigura(ICarta<int> carta)
+    public string CartaFigura(ICarta<int> carta)
     {
-        return carta.Valor == 10 && !EsDiez(carta);
+     if (carta is ICartaJack cartaJack)
+        {
+            if (cartaJack.Valor == ValoresCartaJack.Jota)
+            {
+                return "Jota";
+            }
+            if (cartaJack.Valor == ValoresCartaJack.Reina)
+            {
+                return "Reina";
+            }
+            if (cartaJack.Valor == ValoresCartaJack.Rey)
+            {
+                return "Rey";
+            }
+        }
+        throw new Exception(message: "La carta no es una figura.");
     }
+ 
 
-    private bool EsDiez(ICarta<int> carta)
-    {
-        var descripcion = carta.ToString()?.ToLowerInvariant() ?? "";
-        return descripcion.Contains("10") || descripcion.Contains("diez");
-    }
-    private bool EsJota(ICarta<int> carta)
-    {
-        var descripcion = carta.ToString()?.ToLowerInvariant() ?? "";
-        return descripcion.Contains("j") || descripcion.Contains("jota");
-    }
-    private bool EsReina(ICarta<int> carta)
-    {
-        var descripcion = carta.ToString()?.ToLowerInvariant() ?? "";
-        return descripcion.Contains("q") || descripcion.Contains("reina");
-    }
-    private bool EsRey(ICarta<int> carta)
-    {
-        var descripcion = carta.ToString()?.ToLowerInvariant() ?? "";
-        return descripcion.Contains("k") || descripcion.Contains("rey");
-    }
-    public string Figuras(ICarta<int> carta)
-    {
-          if (!AplicarLogica(carta))
-    {
-        throw new ArgumentException("La carta no es una figura.");
-    }
-    
-    if (EsJota(carta))
-    {
-        return "Jota";
-    }
-    if (EsReina(carta))
-    {
-        return "Reina";
-    }
-    if (EsRey(carta))
-    {
-        return "Rey";
-    }
-    
-  
-    throw new InvalidOperationException("Carta identificada como figura pero no reconocida como J, Q o K");
-    }
+   
+
     
 }
