@@ -8,7 +8,7 @@ using Juegos_de_Cartas.Enumeradores;
 
 internal class BarajeadorDeck
 {
-    public void Barajear<T>(Deck<T> deck) where T : class
+    public void Barajear<TDeck>(Deck<TDeck> deck) where TDeck : class
         {
              deck.Barajear();
         }
