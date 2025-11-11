@@ -9,7 +9,7 @@ public abstract class JuegoMain<TCarta> where TCarta : class
   public List<IJugadores<TCarta>> Jugadores
   {
     get { return _jugadores; }
-    protected set { Jugadores = value; }
+    protected set { _jugadores = value; }
   }
   protected int _indiceJugadorAcutal = 0;
   public IJugadores<TCarta> JugadorActual
@@ -35,25 +35,25 @@ public abstract class JuegoMain<TCarta> where TCarta : class
   {
     Jugadores = jugadores;
     Deck = deck;
+    CartasUsadas = new Deck<TCarta>();
   }
-  public virtual void IniciarJuego()
+  public abstract void IniciarJuego();
+  public TCarta TomarDecision(IJugadores<TCarta> jugador)
   {
-    throw new NotImplementedException();
+    return jugador.JugarCarta();
   }
-  public virtual void TomarDecision()
+  public void SiguienteJugador(int skip = 1)
   {
-    throw new NotImplementedException();
+    _indiceJugadorAcutal += _sentido * skip;
+    while (_indiceJugadorAcutal < 0)
+    {
+      _indiceJugadorAcutal += Jugadores.Count;
+    }
+    while (_indiceJugadorAcutal >= Jugadores.Count)
+    {
+      _indiceJugadorAcutal -= Jugadores.Count;
+    }
   }
-  public virtual void SiguienteJugador()
-  {
-    throw new NotImplementedException();
-  }
-  public virtual bool SePuedeJugar()
-  {
-    throw new NotImplementedException();
-  }
-  public virtual void MovimientoDeCartas()
-  {
-    throw new NotImplementedException();
-  }
+  public abstract bool SePuedeJugar(TCarta carta);
+  public abstract void HacerJugada();
 }

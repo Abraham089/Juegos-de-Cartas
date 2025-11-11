@@ -17,7 +17,7 @@ public interface IJugadores<TCarta> where TCarta : class
     // metodo donde se pueda ver si el jugador puede jugar una carta bool
 
 
-    void JugarCarta(TCarta carta);
+    TCarta JugarCarta();
     void NuevaMano();
 
     
