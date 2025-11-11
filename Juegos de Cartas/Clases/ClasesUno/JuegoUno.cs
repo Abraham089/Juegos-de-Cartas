@@ -29,7 +29,7 @@ public class JuegoUno : JuegoMain<CartaUnoAbstracta>
 
     CartaUnoAbstracta cartaElegida = jugadorActual.JugarCarta(); //jugadorActual.JugarCarta(cartaSuperior); 
 
-    if (cartaElegida != null && SePuedeJugar(cartaElegida))
+    if (cartaElegida != null)
     {
         CartasUsadas.AgregarCarta(cartaElegida);
         AplicarEfectos(cartaElegida); 
@@ -57,9 +57,22 @@ public class JuegoUno : JuegoMain<CartaUnoAbstracta>
     throw new NotImplementedException();
   }
 
-  public override bool SePuedeJugar(CartaUnoAbstracta carta)
+  public static bool SePuedeJugar(CartaUnoAbstracta cartaJugada, CartaUnoAbstracta cartaEncima)
   {
-    throw new NotImplementedException();
+    bool jugable = true;
+    if (cartaJugada.Color != cartaEncima.Color && cartaJugada.Color != Enumeradores.Colores.Negro)
+    {
+      jugable = false;
+    }
+    if(cartaJugada is CartaNormal && cartaEncima is CartaNormal)
+    {
+      if(cartaJugada.Valor != cartaEncima.Valor)
+      {
+        return false;
+      }
+    }
+
+    return jugable;
   }
   public void AplicarEfectos(CartaUnoAbstracta carta)
   {

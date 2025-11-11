@@ -54,6 +54,5 @@ public abstract class JuegoMain<TCarta> where TCarta : class
       _indiceJugadorAcutal -= Jugadores.Count;
     }
   }
-  public abstract bool SePuedeJugar(TCarta carta);
   public abstract void HacerJugada();
 }
