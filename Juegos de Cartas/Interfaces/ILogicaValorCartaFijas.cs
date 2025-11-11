@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace Juegos_de_Cartas.Interfaces
 {
-    public interface IEfectoValoresVariablesCartas
+    public interface ILogicaValorCartaFijas: ILogicaDeCartasJack
     {
-        
+        int ValorCarta{ get; }
     }
 }
