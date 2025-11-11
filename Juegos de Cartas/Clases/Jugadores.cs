@@ -58,11 +58,8 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
 
     public TCarta JugarCarta()
     {
-        if (carta == null)
-        {
-            throw new Exception(message: "la carta no puede ser nula");
-        }
-        Mano.AgregarCarta(carta);
+        var random = new Random();
+        return Mano.Cartas[random.Next(Mano.Cartas.Count - 1)];
     }
 
     public virtual void NuevaMano()
