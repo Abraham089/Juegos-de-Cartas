@@ -5,7 +5,7 @@ namespace Juegos_de_Cartas.Clases;
 
 public class Deck<ICarta> : IDeck<ICarta> where ICarta : class
 {
-    private List<ICarta> _cartas;
+private List<ICarta> _cartas;
 
 public List<ICarta> Cartas
     {
