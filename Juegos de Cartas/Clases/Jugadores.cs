@@ -56,7 +56,7 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
     // los cosas que puede hacer el jugador 
     
 
-    public void JugarCarta(TCarta carta)
+    public TCarta JugarCarta()
     {
         if (carta == null)
         {

@@ -9,28 +9,19 @@ public class JuegoUno : JuegoMain<CartaUnoAbstracta>
   {
   }
 
-  public void IniciarJuego()
+  public override void HacerJugada()
   {
     throw new NotImplementedException();
   }
 
-  public void MovimientoDeCartas()
+  public override void IniciarJuego()
   {
     throw new NotImplementedException();
   }
 
-  public bool SePuedeJugar()
-  {
-    throw new NotImplementedException();
-  }
-
-  public void SiguienteJugador()
-  {
-    throw new NotImplementedException();
-  }
-
-  public void TomarDecision()
+  public override bool SePuedeJugar(CartaUnoAbstracta carta)
   {
     throw new NotImplementedException();
   }
 }
+
