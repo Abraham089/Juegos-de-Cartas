@@ -5,9 +5,10 @@ namespace Juegos_de_Cartas.Clases.ClasesUno.Jugadores;
 
 public abstract class JugadorAbstractoUno : Jugadores<CartaUnoAbstracta>
 {
-  protected readonly Random _rng = new Random();
+  protected readonly Random _rng;
   protected JugadorAbstractoUno(string nombre) : base(nombre)
   {
+    _rng = new Random();
   }
 
 public abstract CartaUnoAbstracta DecidirJugarCartaRobada(CartaUnoAbstracta cartaRobada, CartaUnoAbstracta cartaSuperior, IJugadores<CartaUnoAbstracta>? siguienteJugador);
@@ -49,7 +50,7 @@ public Enumeradores.Colores ElegirColorComodin()
         Enumeradores.Colores.Verde,
         Enumeradores.Colores.Amarillo
     };
-    
+
     int indice = _rng.Next(coloresValidos.Length);
     return coloresValidos[indice];
 }

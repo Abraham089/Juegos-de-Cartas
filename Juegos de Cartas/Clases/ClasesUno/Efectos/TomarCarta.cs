@@ -7,18 +7,14 @@ namespace Juegos_de_Cartas.Clases.ClasesUno.Efectos;
 public class TomarCarta : Interfaces.IEfectoDeCarta
 {
   private readonly int _cantidadARobar;
-  private int CantidadARobar{
-    set
-    {
-      if (_cantidadARobar <= 0)
-      {
-        throw new ArgumentException("La cantidad a robar debe ser positiva.");
-      }
-    }
-  }
+
   public TomarCarta(int cantidad)
     {
-        CantidadARobar = cantidad;
+      if (cantidad <= 0)
+        {
+            throw new ArgumentException("La cantidad a robar debe ser positiva.", nameof(cantidad));
+        }
+        _cantidadARobar = cantidad;
     }
   public void Efecto(JuegoUno juego, JugadorAbstractoUno jugadorCausante)
   {

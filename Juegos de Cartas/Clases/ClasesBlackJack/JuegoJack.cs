@@ -49,17 +49,26 @@ public class JuegoJack : JuegoMain<ICartaJack>
         {
             ImprimirJack?.MostrarInicioRonda(rondaActual);
 
+         
+            var nuevoDeck = DeckJack.ConstruirMazoCompleto();
+            if (AdminRondasJack.RepartidorCartas is RepartirCartasJack repartirCartasJack)
+            {
+                repartirCartasJack.Deck = nuevoDeck;
+            }
+            foreach (var jugador in Jugadores)
+            {
+                jugador.Mano.Limpiar();
+            }
+            Dealer.Mano.Limpiar();
+
             AdminRondasJack.RepartidorCartas.RepartirCartas(Jugadores, Dealer);
             AdminRondasJack.LogicaDeTurnos.ReiniciarTurno();
             AdminRondasJack.EjecutarTurnosJugadores(Jugadores, Dealer);
 
             ImprimirJack?.MostrarResultadosRonda(Jugadores);
-
         }
 
         ImprimirJack?.MostrarGanadoresFinales(Jugadores);
-
-
     }
     public override void IniciarJuego()
     {

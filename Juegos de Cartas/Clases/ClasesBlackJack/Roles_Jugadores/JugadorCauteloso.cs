@@ -12,8 +12,9 @@ public class JugadorCauteloso : Jugadores<ICartaJack>
         get; set;
     }
     public JugadorCauteloso(string nombre, int puntoCorte = 17)
-    : base(nombre)
+        : base(nombre)
     {
+        Mano = new ManoJack();
         PuntoCorte = puntoCorte;
     }
 

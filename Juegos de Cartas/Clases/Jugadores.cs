@@ -42,11 +42,12 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
     }
 
 
+    private int _victoriasAcumuladas;
     public int VictoriasAcumuladas
     {
         get
         {
-            return VictoriasAcumuladas;
+            return _victoriasAcumuladas;
         }
         private set
         {
@@ -54,7 +55,7 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
             {
                 throw new Exception(message: "Las victorias acumuladas no pueden ser negativas.");
             }
-            VictoriasAcumuladas = value;
+            _victoriasAcumuladas = value;
         }
     }
 
@@ -69,10 +70,10 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
     {
         Mano = mano;
     }
-    
+
  
 
-    public void RecibirCarta(TCarta carta)
+    public virtual void RecibirCarta(TCarta carta)
     {
         if (carta == null)
         {

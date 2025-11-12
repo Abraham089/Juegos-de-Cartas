@@ -27,7 +27,7 @@ public class ResultadosJack : IResultados<IJugadores<ICartaJack>>
             var jugadorSePaso = ((ManoJack)jugador.Mano).SePaso();
             if (!jugadorSePaso && (dealerSePaso || puntosJugador > puntosDealer))
             {
-                //cambiar implementacion cuando este lo de los jugadores 
+
               ((dynamic)jugador).AgregarVictoria();
             }
        
