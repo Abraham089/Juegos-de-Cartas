@@ -38,10 +38,6 @@ public abstract class JuegoMain<TCarta> where TCarta : class
     CartasUsadas = new Deck<TCarta>();
   }
   public abstract void IniciarJuego();
-  public TCarta TomarDecision(IJugadores<TCarta> jugador)
-  {
-    return jugador.JugarCarta();
-  }
   public void SiguienteJugador(int skip = 1)
   {
     _indiceJugadorAcutal += _sentido * skip;

@@ -15,9 +15,6 @@ public interface IJugadores<TCarta> where TCarta : class
 
     void RecibirCarta(TCarta carta);
     // metodo donde se pueda ver si el jugador puede jugar una carta bool
-
-
-    TCarta JugarCarta();
     void NuevaMano();
     
     // Decisión de si el jugador quiere pedir otra carta (true = pedir)

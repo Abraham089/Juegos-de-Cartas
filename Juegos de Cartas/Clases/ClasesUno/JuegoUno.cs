@@ -26,8 +26,9 @@ public class JuegoUno : JuegoMain<CartaUnoAbstracta>
   {
     var jugadorActual = (JugadorAbstractoUno)JugadorActual;
     CartaUnoAbstracta cartaSuperior = CartaEncima;
+    IJugadores<CartaUnoAbstracta> siguiente = ObtenerSiguienteJugador();
 
-    CartaUnoAbstracta cartaElegida = jugadorActual.JugarCarta(); //jugadorActual.JugarCarta(cartaSuperior); 
+    CartaUnoAbstracta cartaElegida = jugadorActual.JugarCarta(cartaSuperior, siguiente); //jugadorActual.JugarCarta(cartaSuperior); 
 
     if (cartaElegida != null)
     {
@@ -37,10 +38,10 @@ public class JuegoUno : JuegoMain<CartaUnoAbstracta>
     }
     else
     {
-        CartaUnoAbstracta cartaRobada = RobarCartaDelMazo(); 
+        CartaUnoAbstracta cartaRobada = RobarCartaDelMazo();
         jugadorActual.RecibirCarta(cartaRobada); 
 
-        CartaUnoAbstracta cartaJugable = jugadorActual.DecidirJugarCartaRobada(cartaRobada, cartaSuperior);
+        CartaUnoAbstracta cartaJugable = jugadorActual.DecidirJugarCartaRobada(cartaRobada, cartaSuperior, siguiente);
 
         if (cartaJugable != null)
         {
@@ -89,5 +90,13 @@ public class JuegoUno : JuegoMain<CartaUnoAbstracta>
     CartaUnoAbstracta cartaRobada = (CartaUnoAbstracta)Deck.TomarCarta();
     return cartaRobada;
   }
+  public IJugadores<CartaUnoAbstracta> ObtenerSiguienteJugador()
+{
+    int indiceActual = _indiceJugadorAcutal; 
+    
+    int indiceSiguiente = (indiceActual + 1) % Jugadores.Count; 
+    
+    return Jugadores[indiceSiguiente];
+}
 }
 
