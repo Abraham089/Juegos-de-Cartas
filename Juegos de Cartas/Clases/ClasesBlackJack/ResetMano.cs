@@ -9,15 +9,15 @@ namespace Juegos_de_Cartas.Clases.ClasesBlackJack;
 
 public class ResetMano : Resetmano<ICartaJack>, IResetMano
 {
-      public ResetMano(IPuntosJack calculadoraPuntos, IEstadosJack evaluadorEstados) 
+    public ResetMano(IPuntosJack calculadoraPuntos, IEstadosJack evaluadorEstados)
         : base(calculadoraPuntos, evaluadorEstados)
     {
-        
+       
     }
 
     public string FormatearDescripcionCompleta(IEnumerable<ICartaJack> cartas)
     {
-       return FormatearCompleta(cartas);
+        return FormatearCompleta(cartas);
     }
 
     protected override string ObtenerEstadoPersonalizado(IList<ICartaJack> cartas)
@@ -29,19 +29,14 @@ public class ResetMano : Resetmano<ICartaJack>, IResetMano
         {
             return "blackjack";
         }
-
-       else if (estadosJack.SePaso(cartas))
+        else if (estadosJack.SePaso(cartas))
         {
             return "se paso";
         }
-        
-        
         if (puntosJack.EsManoSuave(cartas))
         {
             return "Mano Suave";
         }
-   
-
         return "";
     }
 }

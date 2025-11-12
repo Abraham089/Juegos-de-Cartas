@@ -27,7 +27,8 @@ public class RepartirCartasJack : IRepartirCartas<ICartaJack>
     
     public RepartirCartasJack(Deck<ICartaJack> deck)
     {
-       Deck= deck;
+        _deck = new Deck<ICartaJack>();
+        Deck = deck;
     }
     public bool DeckVacio 
     {
