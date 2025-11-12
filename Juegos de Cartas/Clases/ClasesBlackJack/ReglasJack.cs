@@ -10,6 +10,8 @@ namespace Juegos_de_Cartas.Clases;
 
 public class ReglasJack : IReglas<IJugadores<ICartaJack>, ICartaJack>
 {
+    public ReglasJack() { }
+
     public bool DealerDebeJugar(IJugadores<ICartaJack> dealer)
     {
         if (dealer == null)
@@ -23,7 +25,6 @@ public class ReglasJack : IReglas<IJugadores<ICartaJack>, ICartaJack>
                 return manoBlackJack.CalcularPuntos() < 17 && !manoBlackJack.SePaso();
             }
         }
-
         return false;
     }
 
@@ -44,7 +45,6 @@ public class ReglasJack : IReglas<IJugadores<ICartaJack>, ICartaJack>
                 return manoBlackJack.CalcularPuntos() < 21 && !manoBlackJack.SePaso();
             }
         }
-
         return false;
     }
 
@@ -74,7 +74,7 @@ public class ReglasJack : IReglas<IJugadores<ICartaJack>, ICartaJack>
         {
             if (jugadorJack.Mano is ManoJack manoBlackJack)
             {
-                return !manoBlackJack.SePaso() &&  !manoBlackJack.EsBlackjack() && manoBlackJack.CalcularPuntos() < 21;
+                return !manoBlackJack.SePaso() && !manoBlackJack.EsBlackjack() && manoBlackJack.CalcularPuntos() < 21;
             }
         }
         return true;

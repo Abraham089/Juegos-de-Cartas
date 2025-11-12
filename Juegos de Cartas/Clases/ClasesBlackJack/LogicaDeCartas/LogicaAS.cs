@@ -5,6 +5,7 @@ namespace Juegos_de_Cartas.Clases.ClasesBlackJack.Efectos;
 
 public class LogicaAS : IlogicaValoresCartasAs
 {
+    public LogicaAS() {}
     public string TipoDeCarta
     {
         get { return "As"; }

@@ -8,6 +8,7 @@ namespace Juegos_de_Cartas.Clases.ClasesBlackJack;
 
 public class ResultadosJack : IResultados<IJugadores<ICartaJack>>
 {
+    public ResultadosJack() {}
     public void DeterminarGanadores(IEnumerable<IJugadores<ICartaJack>> jugadores, IJugadores<ICartaJack> dealer)
     {
         if (jugadores == null)
@@ -46,8 +47,5 @@ public class ResultadosJack : IResultados<IJugadores<ICartaJack>>
 
     }
 
-    public void ReiniciarResultados()
-    {
-        // Implementación para reiniciar resultados si es necesario
-    }
+  
 }

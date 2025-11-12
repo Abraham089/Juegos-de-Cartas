@@ -10,7 +10,6 @@ namespace Juegos_de_Cartas.Clases.ClasesBlackJack;
 public class ManoJack : Mano<ICartaJack>
 {
     private IPuntosJack? _puntosJack;
-
     public IPuntosJack? PuntosJack
     {
         get { return _puntosJack; }
@@ -38,29 +37,32 @@ public class ManoJack : Mano<ICartaJack>
         }
     }
 
-    private IResetMano?  _resetMano;
-        public IResetMano?  ResetMano
+    private IResetMano? _resetMano;
+    public IResetMano? ResetMano
+    {
+        get { return _resetMano; }
+        private set
         {
-            get { return _resetMano; }
-            private set
+            if (value == null)
             {
-                if (value == null)
-                {
-                    throw new Exception("ResetMano no puede ser null");
-                }
-                _resetMano = value;
+                throw new Exception("ResetMano no puede ser null");
             }
+            _resetMano = value;
         }
+    }
+
+    public ManoJack()
+        : this(new PuntosJack(), new EstadosJack(new PuntosJack()), new ResetMano(new PuntosJack(), new EstadosJack(new PuntosJack())))
+    {
+        
+    }
 
     public ManoJack(IPuntosJack? puntosJack, IEstadosJack? estadosJack, IResetMano? resetMano)
     {
-
-    PuntosJack = puntosJack;
-    EstadosJack = estadosJack;
-    ResetMano = resetMano;
-
+        PuntosJack = puntosJack;
+        EstadosJack = estadosJack;
+        ResetMano = resetMano;
     }
-
 
     public int CalcularPuntos()
     {
@@ -76,7 +78,6 @@ public class ManoJack : Mano<ICartaJack>
     }
     public string ObtenerDescripcionCompleta()
     {
-    return ResetMano!.FormatearDescripcionCompleta(Cartas);
+        return ResetMano!.FormatearDescripcionCompleta(Cartas);
     }
-
 }

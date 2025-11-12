@@ -4,13 +4,42 @@ using System.Runtime.Intrinsics.Arm;
 using System.Security.Cryptography.X509Certificates;
 using Juegos_de_Cartas.Enumeradores;
 using Juegos_de_Cartas.Interfaces;
+using Juegos_de_Cartas.Clases.ClasesBlackJack.LogicaDeCartas;
+using Juegos_de_Cartas.Clases.ClasesBlackJack.Efectos;
 
 namespace Juegos_de_Cartas.Clases;
 
 public class PuntosJack : PuntosCalculadora<ICartaJack>, IPuntosJack
 {
-    
+    private LogicaDeCartasNumerica _logicaNumerica;
 
+    public LogicaDeCartasNumerica LogicaNumerica
+    {
+        get { return _logicaNumerica; }
+    }
+    private LogicaDeCartasFiguras _logicaFiguras;
+
+    public LogicaDeCartasFiguras LogicaFiguras
+    {
+        get { return _logicaFiguras; }
+    }
+    private LogicaDeCartaDiez _logicaDiez;
+    public LogicaDeCartaDiez LogicaDiez
+    {
+        get { return _logicaDiez; }
+    }
+    private LogicaAS _logicaAs;
+    public LogicaAS LogicaAs
+    {
+        get { return _logicaAs; }
+    }
+    public PuntosJack()
+    {
+        _logicaNumerica = new LogicaDeCartasNumerica();
+        _logicaFiguras = new LogicaDeCartasFiguras();
+        _logicaDiez = new LogicaDeCartaDiez();
+    _logicaAs = new LogicaAS();
+    }
     public bool EsManoSuave(IEnumerable<ICartaJack> cartas)
     {
 
@@ -36,7 +65,7 @@ public class PuntosJack : PuntosCalculadora<ICartaJack>, IPuntosJack
                 puntosBase += ObtenerValorCarta(carta);
             }
         }
-        return  puntosBase + 1 * (AsesContados - 1) + 11 <= 21;
+        return puntosBase + 1 * (AsesContados - 1) + 11 <= 21;
     }
 
     public int ContarAses(IEnumerable<ICartaJack> cartas)
@@ -69,40 +98,46 @@ public class PuntosJack : PuntosCalculadora<ICartaJack>, IPuntosJack
 
     protected override int ObtenerValorCarta(ICartaJack carta)
     {
-       if (carta.Valor == ValoresCartaJack.As)
+        if (carta.Valor == ValoresCartaJack.As)
         {
+            var cartaIntAs = carta as ICarta<int>;
+            var deckVacio = new Deck<ICarta<int>>();
+            if (cartaIntAs != null && LogicaAs.AplicarLogica(cartaIntAs))
+                return LogicaAs.CalcularValor(cartaIntAs, deckVacio, 0);
             return 1;
         }
-        if (carta.Valor >= ValoresCartaJack.Jota || carta.Valor >= ValoresCartaJack.Reina || carta.Valor >= ValoresCartaJack.Rey)
+
+        var cartaInt = carta as ICarta<int>;
+        if (cartaInt != null)
         {
-            return 10;
+            var deckVacio = new Deck<ICarta<int>>();
+            if (LogicaFiguras.AplicarLogica(cartaInt))
+                return LogicaFiguras.CalcularValor(cartaInt, deckVacio, 0);
+
+            if (LogicaDiez.AplicarLogica(cartaInt))
+                return LogicaDiez.CalcularValor(cartaInt, deckVacio, 0);
+
+            if (LogicaNumerica.AplicarLogica(cartaInt))
+                return LogicaNumerica.CalcularValor(cartaInt, deckVacio, 0);
         }
-        if (carta.Valor >= ValoresCartaJack.Dos && carta.Valor <= ValoresCartaJack.Diez)
-        {
-            return (int)carta.Valor;
-        }
-        throw new Exception( message: "Valor de carta no reconocido.");   
-       
+
+        throw new Exception("Valor de carta no reconocido.");
     }
 
     private int CalcularConAses(int puntosBase, int cantidadAses)
     {
-       if (cantidadAses == 0)
+        if (cantidadAses == 0)
         {
             return puntosBase;
         }
-
         var puntosConUnAsOnce = puntosBase + 11 + (cantidadAses - 1) * 1;
-        
         if (puntosConUnAsOnce <= 21)
         {
             return puntosConUnAsOnce;
         }
-        else 
+        else
         {
             return puntosBase + cantidadAses * 1;
-        }   
-    
+        }
     }
-    
 }

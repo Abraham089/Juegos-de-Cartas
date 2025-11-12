@@ -8,10 +8,17 @@ namespace Juegos_de_Cartas.Clases.ClasesBlackJack;
 
 public class AdminRondas : IAdminRondas<IJugadores<ICartaJack>, ICartaJack>
 {
-    private IRepartirCartas<ICartaJack> _repartidorCartas;
+    private IRepartirCartas<ICartaJack>? _repartidorCartas;
     public IRepartirCartas<ICartaJack> RepartidorCartas
     {
-        get { return _repartidorCartas; }
+        get
+        {
+            if (_repartidorCartas == null)
+            {
+                throw new Exception(message: "El repartidor de cartas no ha sido inicializado.");
+            }
+            return _repartidorCartas;
+        }
         set
         {
             if (value == null)
@@ -21,7 +28,7 @@ public class AdminRondas : IAdminRondas<IJugadores<ICartaJack>, ICartaJack>
             _repartidorCartas = value;
         }
     }
-private IReglas<IJugadores<ICartaJack>, ICartaJack> _reglasJack;
+private IReglas<IJugadores<ICartaJack>, ICartaJack> _reglasJack = new ReglasJack();
 public IReglas<IJugadores<ICartaJack>, ICartaJack> ReglasJack
     {
         get { return _reglasJack; }
@@ -36,10 +43,17 @@ public IReglas<IJugadores<ICartaJack>, ICartaJack> ReglasJack
     }
 
 
-    private ITurnosJack _logicaDeTurnos;
+    private ITurnosJack? _logicaDeTurnos;
     public ITurnosJack LogicaDeTurnos
     {
-        get { return _logicaDeTurnos; }
+        get
+        {
+            if (_logicaDeTurnos == null)
+            {
+                throw new Exception(message: "La logica de turnos no ha sido inicializada.");
+            }
+            return _logicaDeTurnos;
+        }
         set
         {
             if (value == null)
@@ -49,7 +63,7 @@ public IReglas<IJugadores<ICartaJack>, ICartaJack> ReglasJack
             _logicaDeTurnos = value;
         }
     }
-    private ImprimirJack? _imprimirJack;
+    private ImprimirJack? _imprimirJack=new ImprimirJack();
     public ImprimirJack? ImprimirJack
     {
         get { return _imprimirJack; }

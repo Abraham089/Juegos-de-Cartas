@@ -61,12 +61,11 @@ public class JuegoJack : JuegoMain<ICartaJack>
 
 
     }
-public override void IniciarJuego()
-{
-    int numeroDeRondas = 5;
-    IniciarJuegoJack(numeroDeRondas);
-}
-
+    public override void IniciarJuego()
+    {
+        int numeroDeRondas = 5;
+        IniciarJuegoJack(numeroDeRondas);
+    }
 
     public override void HacerJugada()
     {

@@ -5,16 +5,13 @@ using System.Collections.Generic;
 
 namespace Juegos_de_Cartas.Clases.ClasesBlackJack;
 
-public class EstadosJack: EstadoJuego<ICartaJack>, IEstadosJack
+public class EstadosJack : EstadoJuego<ICartaJack>, IEstadosJack
 {
-  
-
-    public EstadosJack(IPuntosCalculadora<ICartaJack> calculadoraPuntos) 
-    : base(calculadoraPuntos)
+    public EstadosJack(IPuntosCalculadora<ICartaJack> calculadoraPuntos)
+        : base(calculadoraPuntos)
     {
+        
     }
-
-    
 
     public bool EsBlackjack(IEnumerable<ICartaJack> cartas, int cantidadCartas)
     {
@@ -23,16 +20,16 @@ public class EstadosJack: EstadoJuego<ICartaJack>, IEstadosJack
 
     public bool SePaso(IEnumerable<ICartaJack> cartas)
     {
-         return ObtenerPuntos(cartas) > 21;
+        return ObtenerPuntos(cartas) > 21;
     }
 
     public override bool EsEstadoGanador(IEnumerable<ICartaJack> cartas, int cantidad)
     {
-         return EsBlackjack(cartas, cantidad);
+        return EsBlackjack(cartas, cantidad);
     }
 
     public override bool EsEstadoPerdedor(IEnumerable<ICartaJack> cartas)
     {
-         return SePaso(cartas);
+        return SePaso(cartas);
     }
 }
