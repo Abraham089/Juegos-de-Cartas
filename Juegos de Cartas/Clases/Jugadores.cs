@@ -71,7 +71,7 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
   
     
 
-    public TCarta JugarCarta()
+    public TCarta JugarCarta(TCarta cartaSuperior, IJugadores<TCarta>? siguienteJugador = null)
     {
         var random = new Random();
         return Mano.Cartas[random.Next(Mano.Cartas.Count - 1)];
@@ -137,5 +137,4 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
     {
         return CalcularPuntos() > 21;
     }
-    public abstract bool JugarTurno(TCarta cartaVisibleDealer);
 }
