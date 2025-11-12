@@ -14,7 +14,8 @@ public interface IJugadores<TCarta> where TCarta : class
     int CalcularPuntos();
     bool SePaso();
     void RecibirCarta(TCarta carta);
-    TCarta JugarCarta();
+    // metodo donde se pueda ver si el jugador puede jugar una carta bool
+    void NuevaMano();
     
   
     
