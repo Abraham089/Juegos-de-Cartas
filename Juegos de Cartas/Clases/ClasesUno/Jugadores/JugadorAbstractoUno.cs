@@ -1,33 +1,35 @@
 using System;
 using Juegos_de_Cartas.Interfaces;
+using Juegos_de_Cartas.Clases;
 
 namespace Juegos_de_Cartas.Clases.ClasesUno.Jugadores;
 
 public abstract class JugadorAbstractoUno : IJugadores<CartaUnoAbstracta>
 {
-  public string Nombre => throw new NotImplementedException();
+  // El nombre debe ser provisto por la implementación concreta
+  public abstract string Nombre { get; }
 
-  public IMano<CartaUnoAbstracta> Mano => throw new NotImplementedException();
+  // Proveemos una mano por defecto para simplificar implementaciones concretas
+  private readonly Mano<CartaUnoAbstracta> _mano = new Mano<CartaUnoAbstracta>();
+  public virtual IMano<CartaUnoAbstracta> Mano => _mano;
 
-  public int Puntos => throw new NotImplementedException();
+  // Puntos acumulados por el jugador (implementación básica)
+  public virtual int Puntos { get; protected set; }
 
-  public CartaUnoAbstracta DecidirJugarCartaRobada(CartaUnoAbstracta cartaRobada, CartaUnoAbstracta cartaSuperior)
+  // Métodos que deben implementar los jugadores concretos
+  public abstract CartaUnoAbstracta DecidirJugarCartaRobada(CartaUnoAbstracta cartaRobada, CartaUnoAbstracta cartaSuperior);
+
+  public abstract CartaUnoAbstracta JugarCarta();
+
+  // Comportamientos por defecto
+  public virtual void NuevaMano()
   {
-    throw new NotImplementedException();
+    Mano.Limpiar();
   }
 
-  public CartaUnoAbstracta JugarCarta()
+  public virtual void RecibirCarta(CartaUnoAbstracta carta)
   {
-    throw new NotImplementedException();
-  }
-
-  public void NuevaMano()
-  {
-    throw new NotImplementedException();
-  }
-
-  public void RecibirCarta(CartaUnoAbstracta carta)
-  {
-    throw new NotImplementedException();
+    if (carta == null) throw new ArgumentNullException(nameof(carta));
+    Mano.AgregarCarta(carta);
   }
 }
