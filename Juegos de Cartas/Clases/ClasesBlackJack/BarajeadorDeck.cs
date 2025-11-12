@@ -10,6 +10,6 @@ internal class BarajeadorDeck
 {
     public void Barajear<TDeck>(Deck<TDeck> deck) where TDeck : class
         {
-             deck.Barajear();
+            deck.Bareajear();
         }
 }

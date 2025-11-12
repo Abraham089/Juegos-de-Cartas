@@ -119,4 +119,6 @@ public List<ICarta> Cartas
         _cartas.RemoveAt(0);
         return carta;
     }
+
+ 
 }
