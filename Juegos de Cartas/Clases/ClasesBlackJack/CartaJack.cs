@@ -74,15 +74,6 @@ public class CartaJack : ICartaJack
       return (int)Valor;
     }
 
-    public string ObtenerDescripcionDeCarta()
-    {
-        return $"{Valor} de {Figura} ({Color})";
-    }
-
-    public bool EsCartaJugable(ICarta<ValoresCartaJack> carta)
-    {
-        return carta is CartaJack;
-    }
      public override bool Equals(object? obj)
     {
         if (obj is CartaJack otra)
@@ -95,10 +86,5 @@ public class CartaJack : ICartaJack
     public override int GetHashCode()
     {
         return HashCode.Combine(Valor, Figura);
-    }
-
-    public override string ToString()
-    {
-     return  ObtenerDescripcionDeCarta();
     }
 }

@@ -68,15 +68,21 @@ public class JugadorCalculador : JugadorAbstractoUno
     }
 
     private CartaUnoAbstracta? EncontrarMejorCartaEspecial(CartaUnoAbstracta cartaSuperior)
+{
+    var cartasTrampaLegales = Mano.Cartas
+        .OfType<CartaTrampa>()
+        .Where(c => JuegoUno.SePuedeJugar(c, cartaSuperior));
+
+    var mejorEspecial = cartasTrampaLegales
+        .FirstOrDefault(c => TieneEfectoTomarCarta(c));
+
+    if (mejorEspecial != null)
     {
-        
-        var cartaValida = Mano.Cartas
-            .OfType<CartaTrampa>()
-            .Where(c => JuegoUno.SePuedeJugar(c, cartaSuperior)) 
-            .FirstOrDefault();
-            
-        return cartaValida;
+        return mejorEspecial;
     }
+
+    return cartasTrampaLegales.FirstOrDefault();
+}
 
     private bool TieneEfectoTomarCarta(CartaTrampa carta)
     {
@@ -93,10 +99,8 @@ public class JugadorCalculador : JugadorAbstractoUno
         var mano = Mano;
         if (mano == null || mano.EstaVacio) return null;
 
-        // Usamos LINQ para encontrar la primera CartaNormal que sea legal de jugar
         return mano.Cartas
             .OfType<CartaNormal>()
-            // Aplicamos la regla estática de la Partida
             .FirstOrDefault(c => JuegoUno.SePuedeJugar(c, cartaSuperior));
     }
     private CartaTrampa? EncontrarCualquierCartaEspecial(CartaUnoAbstracta cartaSuperior)
@@ -104,10 +108,8 @@ public class JugadorCalculador : JugadorAbstractoUno
     var mano = Mano;
     if (mano == null || mano.EstaVacio) return null;
 
-    // Buscamos la primera CartaTrampa legal que se pueda jugar
     return mano.Cartas
         .OfType<CartaTrampa>()
-        // Aplicamos la regla estática de la Partida
         .FirstOrDefault(c => JuegoUno.SePuedeJugar(c, cartaSuperior));
 }
 }

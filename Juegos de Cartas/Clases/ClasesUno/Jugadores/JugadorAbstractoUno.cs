@@ -1,11 +1,11 @@
 using System;
 using Juegos_de_Cartas.Interfaces;
-using Juegos_de_Cartas.Clases;
 
 namespace Juegos_de_Cartas.Clases.ClasesUno.Jugadores;
 
 public abstract class JugadorAbstractoUno : Jugadores<CartaUnoAbstracta>
 {
+  protected readonly Random _rng = new Random();
   protected JugadorAbstractoUno(string nombre) : base(nombre)
   {
   }
@@ -35,8 +35,22 @@ public abstract CartaUnoAbstracta DecidirJugarCartaRobada(CartaUnoAbstracta cart
         throw new NotImplementedException();
     }
 
-    public bool SePaso()
+  public bool SePaso()
+  {
+    throw new NotImplementedException();
+  }
+
+public Enumeradores.Colores ElegirColorComodin()
+{
+    Enumeradores.Colores[] coloresValidos = 
     {
-        throw new NotImplementedException();
-    }
+        Enumeradores.Colores.Rojo,
+        Enumeradores.Colores.Azul,
+        Enumeradores.Colores.Verde,
+        Enumeradores.Colores.Amarillo
+    };
+    
+    int indice = _rng.Next(coloresValidos.Length);
+    return coloresValidos[indice];
+}
 }

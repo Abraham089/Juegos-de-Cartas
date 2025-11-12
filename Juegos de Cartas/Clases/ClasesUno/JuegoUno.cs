@@ -6,6 +6,13 @@ namespace Juegos_de_Cartas.Clases.ClasesUno;
 
 public class JuegoUno : JuegoMain<CartaUnoAbstracta>
 {
+  protected Enumeradores.Colores _colorActivo;
+
+  public Enumeradores.Colores ColorActivo
+  {
+      get { return _colorActivo; }
+      protected set { _colorActivo = value; } 
+  }
   public CartaUnoAbstracta CartaEncima
   {
     get
@@ -18,23 +25,50 @@ public class JuegoUno : JuegoMain<CartaUnoAbstracta>
       return CartasUsadas.Cartas.Last();
     }
   }
+  protected int _saltosAcumulados = 1;
   public JuegoUno(List<IJugadores<CartaUnoAbstracta>> jugadores, Deck<CartaUnoAbstracta> deck) : base(jugadores, deck)
   {
   }
 
-  public override void HacerJugada()
+  public void EstablecerColorActivo(Enumeradores.Colores nuevoColor)
   {
+    _colorActivo = nuevoColor;
+  }
+  public void CambiarDireccion()
+  {
+    _sentido *= -1;
+  }
+  public void SaltarProximoTurno(int cantidad)
+  {
+    _saltosAcumulados += cantidad;
+  }
+  public void ForzarRoboACantidad(IJugadores<CartaUnoAbstracta> jugadorAfectado, int cantidad)
+{
+    for (int i = 0; i < cantidad; i++)
+    {
+        CartaUnoAbstracta cartaRobada = RobarCartaDelMazo(); 
+        
+        jugadorAfectado.RecibirCarta(cartaRobada); 
+    }
+}
+
+
+public override void HacerJugada()
+{
     var jugadorActual = (JugadorAbstractoUno)JugadorActual;
     CartaUnoAbstracta cartaSuperior = CartaEncima;
     IJugadores<CartaUnoAbstracta> siguiente = ObtenerSiguienteJugador();
 
-    CartaUnoAbstracta cartaElegida = jugadorActual.JugarCarta(cartaSuperior, siguiente); //jugadorActual.JugarCarta(cartaSuperior); 
+    CartaUnoAbstracta cartaElegida = jugadorActual.JugarCarta(cartaSuperior, siguiente);
 
     if (cartaElegida != null)
     {
         CartasUsadas.AgregarCarta(cartaElegida);
         AplicarEfectos(cartaElegida); 
-        SiguienteJugador(); 
+        
+        SiguienteJugador(skip: _saltosAcumulados); 
+        
+        _saltosAcumulados = 1; 
     }
     else
     {
@@ -46,12 +80,15 @@ public class JuegoUno : JuegoMain<CartaUnoAbstracta>
         if (cartaJugable != null)
         {
             CartasUsadas.AgregarCarta(cartaJugable);
+            
             AplicarEfectos(cartaJugable);
         }
         
-        SiguienteJugador();
+        SiguienteJugador(skip: _saltosAcumulados); 
+        
+        _saltosAcumulados = 1; 
     }
-  }
+}
 
   public override void IniciarJuego()
   {
@@ -107,7 +144,7 @@ public class JuegoUno : JuegoMain<CartaUnoAbstracta>
     {
       foreach(IEfectoDeCarta efecto in cartaTrampa.Efectos)
       {
-        efecto.Efecto(); //ver como se va a implementar el efecto, por ahora lo mas seguro es que reciba un juego y al jugador que lo hizo
+        efecto.Efecto(this, (JugadorAbstractoUno)JugadorActual);
       }
     }
   }
