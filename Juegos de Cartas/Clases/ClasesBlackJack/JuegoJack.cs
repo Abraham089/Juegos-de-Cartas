@@ -41,7 +41,7 @@ public class JuegoJack : JuegoMain<ICartaJack>
         AdminRondasJack = new AdminRondas(repartirCartas, reglasJack, logicaDeTurnos, ImprimirJack);
 
     }
-    
+
     public void IniciarJuegoJack(int numeroDeRondas)
     {
         ImprimirJack?.MostrarInicioJuego(numeroDeRondas);
@@ -57,8 +57,41 @@ public class JuegoJack : JuegoMain<ICartaJack>
 
         }
 
-         ImprimirJack?.MostrarGanadoresFinales(Jugadores);
-       
-      
+        ImprimirJack?.MostrarGanadoresFinales(Jugadores);
+
+
     }
+public override void IniciarJuego()
+{
+    int numeroDeRondas = 5;
+    IniciarJuegoJack(numeroDeRondas);
+}
+
+public override void TomarDecision()
+    {
+        var jugadorActual = AdminRondasJack.LogicaDeTurnos.JugadorActual;
+        if (jugadorActual != null)
+        {
+            throw new Exception("No hay un jugador actual válido");
+        }
+    ImprimirJack?.MostrarTurnoJugador(jugadorActual);
+  }
+  public override void SiguienteJugador()
+  {
+    AdminRondasJack.LogicaDeTurnos.SiguienteTurno();
+  }
+  public override bool SePuedeJugar()
+  {
+    return AdminRondasJack.LogicaDeTurnos.HayMasJugadores();
+  }
+  public override void MovimientoDeCartas()
+  {
+        var jugadorActual = AdminRondasJack.LogicaDeTurnos.JugadorActual;
+     if (jugadorActual != null)
+        {
+            AdminRondasJack.RepartidorCartas.RepartirCarta(jugadorActual);
+             ImprimirJack?.MostrarAccionJugador(jugadorActual, "recibió una carta", null);
+        }
+      
+  }
 }
