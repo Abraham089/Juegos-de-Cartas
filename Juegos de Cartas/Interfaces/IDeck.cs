@@ -9,7 +9,6 @@ public interface IDeck<TCarta> where TCarta : class
     void Bareajear();
     TCarta? TomarCarta();
     void AgregarCarta(TCarta carta);
-    void AgregarCartas(IEnumerable<TCarta> cartas);
     void Limpiar();
     IReadOnlyList<TCarta> ObtenerCartas();
     TCarta SacarCarta();

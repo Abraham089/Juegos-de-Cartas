@@ -8,17 +8,6 @@ public interface IJugadores<TCarta> where TCarta : class
     
     int VictoriasAcumuladas { get; }
     IMano<TCarta> Mano { get; }
-    int Puntos { get; }
-    void LimpiarMano();
-    void AgregarVictoria();
-    int CalcularPuntos();
-    bool SePaso();
     void RecibirCarta(TCarta carta);
-    // metodo donde se pueda ver si el jugador puede jugar una carta bool
-    void NuevaMano();
     
-  
-    
-    
-
 }
