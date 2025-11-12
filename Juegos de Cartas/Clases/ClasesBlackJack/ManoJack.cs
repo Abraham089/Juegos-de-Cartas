@@ -64,19 +64,19 @@ public class ManoJack : Mano<ICartaJack>
 
     public int CalcularPuntos()
     {
-        return _puntosJack!.CalcularPuntos(Cartas);
+        return PuntosJack!.CalcularPuntos(Cartas);
     }
     public bool EsBlackjack()
     {
-        return _estadosJack!.EsBlackjack(Cartas, CantidadCartas);
+        return EstadosJack!.EsBlackjack(Cartas, CantidadCartas);
     }
     public bool SePaso()
     {
-        return _estadosJack!.SePaso(Cartas);
+        return EstadosJack!.SePaso(Cartas);
     }
     public string ObtenerDescripcionCompleta()
     {
-    return _resetMano!.FormatearDescripcionCompleta(Cartas);
+    return ResetMano!.FormatearDescripcionCompleta(Cartas);
     }
 
 }

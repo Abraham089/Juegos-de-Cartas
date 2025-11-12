@@ -4,7 +4,7 @@ namespace Juegos_de_Cartas.Interfaces;
 
 public interface ICarta<TValueCarta>
 {
-    TValueCarta Valor { get; }
+    TValueCarta? Valor { get; }
     
     String ObtenerDescripcionDeCarta();
 

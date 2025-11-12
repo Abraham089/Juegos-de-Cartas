@@ -5,7 +5,7 @@ namespace Juegos_de_Cartas.Clases;
 
 public class Deck<ICarta> : IDeck<ICarta> where ICarta : class
 {
-    private List<ICarta> _cartas;
+private List<ICarta> _cartas;
 
 public List<ICarta> Cartas
     {
@@ -30,10 +30,10 @@ public List<ICarta> Cartas
         get { return _cartas.Count; }
         set
         {
-            if (value < 0)
-            {
-                throw new Exception(message: "La cantidad de cartas no puede ser negativa");
-            }
+        if (value < 0)
+        {
+            throw new Exception(message: "La cantidad de cartas no puede ser negativa");
+        }
 
         }
     }
