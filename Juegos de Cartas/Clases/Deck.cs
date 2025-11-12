@@ -108,9 +108,4 @@ public List<ICarta> Cartas
         _cartas.RemoveAt(0);
         return carta;
     }
-
-    internal void Barajear()
-    {
-        throw new NotImplementedException();
-    }
 }
