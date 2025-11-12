@@ -108,4 +108,15 @@ public List<ICarta> Cartas
         _cartas.RemoveAt(0);
         return carta;
     }
+
+    public ICarta SacarCarta()
+    {
+        if (EstaVacio)
+        {
+            throw new Exception(message: "No hay cartas en el deck");
+        }
+        ICarta carta = _cartas[0];
+        _cartas.RemoveAt(0);
+        return carta;
+    }
 }
