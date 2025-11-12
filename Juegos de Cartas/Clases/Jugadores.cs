@@ -62,6 +62,12 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
         return Mano.Cartas[random.Next(Mano.Cartas.Count - 1)];
     }
 
+    // Por defecto el jugador no pide cartas (se puede sobreescribir)
+    public virtual bool QuiereCarta()
+    {
+        return false;
+    }
+
     public virtual void NuevaMano()
     {
         Mano.Limpiar();
