@@ -16,8 +16,10 @@ public abstract class JugadorAbstractoUno : IJugadores<CartaUnoAbstracta>
   // Puntos acumulados por el jugador (implementación básica)
   public virtual int Puntos { get; protected set; }
 
-  // Métodos que deben implementar los jugadores concretos
-  public abstract CartaUnoAbstracta DecidirJugarCartaRobada(CartaUnoAbstracta cartaRobada, CartaUnoAbstracta cartaSuperior);
+    public int VictoriasAcumuladas => throw new NotImplementedException();
+
+    // Métodos que deben implementar los jugadores concretos
+    public abstract CartaUnoAbstracta DecidirJugarCartaRobada(CartaUnoAbstracta cartaRobada, CartaUnoAbstracta cartaSuperior);
 
   public abstract CartaUnoAbstracta JugarCarta();
 
@@ -32,4 +34,24 @@ public abstract class JugadorAbstractoUno : IJugadores<CartaUnoAbstracta>
     if (carta == null) throw new ArgumentNullException(nameof(carta));
     Mano.AgregarCarta(carta);
   }
+
+    public void LimpiarMano()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AgregarVictoria()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int CalcularPuntos()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool SePaso()
+    {
+        throw new NotImplementedException();
+    }
 }

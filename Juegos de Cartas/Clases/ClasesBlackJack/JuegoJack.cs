@@ -10,7 +10,7 @@ namespace Juegos_de_Cartas.Clases.ClasesBlackJack;
 
 public class JuegoJack : JuegoMain<ICartaJack>
 {
-    private AdminRondas _adminRondasJack;
+    private AdminRondas _adminRondasJack = null!;
     public AdminRondas AdminRondasJack
     {
         get { return _adminRondasJack; }
@@ -67,31 +67,16 @@ public override void IniciarJuego()
     IniciarJuegoJack(numeroDeRondas);
 }
 
-public override void TomarDecision()
+
+    public override void HacerJugada()
     {
         var jugadorActual = AdminRondasJack.LogicaDeTurnos.JugadorActual;
-        if (jugadorActual != null)
+        if (jugadorActual == null)
         {
             throw new Exception("No hay un jugador actual válido");
         }
-    ImprimirJack?.MostrarTurnoJugador(jugadorActual);
-  }
-  public override void SiguienteJugador()
-  {
-    AdminRondasJack.LogicaDeTurnos.SiguienteTurno();
-  }
-  public override bool SePuedeJugar()
-  {
-    return AdminRondasJack.LogicaDeTurnos.HayMasJugadores();
-  }
-  public override void MovimientoDeCartas()
-  {
-        var jugadorActual = AdminRondasJack.LogicaDeTurnos.JugadorActual;
-     if (jugadorActual != null)
-        {
-            AdminRondasJack.RepartidorCartas.RepartirCarta(jugadorActual);
-             ImprimirJack?.MostrarAccionJugador(jugadorActual, "recibió una carta", null);
-        }
-      
-  }
+        ImprimirJack?.MostrarTurnoJugador(jugadorActual);
+        AdminRondasJack.RepartidorCartas.RepartirCarta(jugadorActual);
+        ImprimirJack?.MostrarAccionJugador(jugadorActual, "recibió una carta", string.Empty);
+    }
 }

@@ -1,6 +1,8 @@
 using System;
 
 namespace Juegos_de_Cartas.Clases;
+
+using Juegos_de_Cartas.Clases.ClasesBlackJack;
 using Juegos_de_Cartas.Interfaces;
 
 public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : class
@@ -10,7 +12,7 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
         {
             return Nombre;
         }
-        private set
+        protected set
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -25,8 +27,8 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
         get
         {
             return Mano;
-        } 
-        private set
+        }
+        protected set
         {
             if (value == null)
             {
@@ -36,24 +38,37 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
         }
     }
 
-    public int Puntos { get; private set; }
+    public int Puntos { get; protected set; }
 
-    //beria de ir el tipo de jugador
+    public int VictoriasAcumuladas
+    {
+        get
+        {
+            return VictoriasAcumuladas;
+        }
+        private set
+        {
+            if (value < 0)
+            {
+                throw new Exception(message: "Las victorias acumuladas no pueden ser negativas.");
+            }
+            VictoriasAcumuladas = value;
+        }
+    }
+
     protected Jugadores(string nombre)
     {
         Nombre = nombre;
-        Mano = new Mano<TCarta>();
-        Puntos = 0;
+        VictoriasAcumuladas = 0;
     }
 
-    //tipo y mano
     protected Jugadores(string nombre, IMano<TCarta> mano)
     : this(nombre)
     {
         Mano = mano;
     }
     
-    // los cosas que puede hacer el jugador 
+  
     
 
     public TCarta JugarCarta()
@@ -62,25 +77,13 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
         return Mano.Cartas[random.Next(Mano.Cartas.Count - 1)];
     }
 
-    // Por defecto el jugador no pide cartas (se puede sobreescribir)
-    public virtual bool QuiereCarta()
-    {
-        return false;
-    }
-
+   
+ 
     public virtual void NuevaMano()
     {
         Mano.Limpiar();
     }
-    public virtual void ActualizarPuntos()
-    {
-        Puntos++;
-    }
-
-    public virtual void ReiniciarPuntos()
-    {
-        Puntos = 0;
-    }
+ 
 
     public void RecibirCarta(TCarta carta)
     {
@@ -90,4 +93,49 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
         }
         Mano.AgregarCarta(carta);
     }
+
+    public void LimpiarMano()
+    {
+        Mano.Limpiar();
+    }
+
+    public void AgregarVictoria()
+    {
+        VictoriasAcumuladas++;
+    }
+    
+
+    public int CalcularPuntos()
+    {
+        if (Mano == null)
+        {
+            throw new Exception("La mano no puede ser nula al calcular puntos.");
+        }
+      
+        int puntos = 0;
+        foreach (var carta in Mano.Cartas)
+        {
+           
+            var valorProp = carta.GetType().GetProperty("valor");
+            if (valorProp != null)
+            {
+                var valor = valorProp.GetValue(carta);
+                if (valor == null)
+                {
+                    throw new Exception("La propiedad valor de la carta es nula");
+                }
+                puntos += (int)valor;
+            }
+            else
+            {
+                throw new Exception("La carta no tiene una propiedad valor");
+            }
+        }
+        return puntos;
+    }
+    public bool SePaso()
+    {
+        return CalcularPuntos() > 21;
+    }
+    public abstract bool JugarTurno(TCarta cartaVisibleDealer);
 }
