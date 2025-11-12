@@ -8,11 +8,12 @@ namespace Juegos_de_Cartas.Clases.ClasesUno;
 
 public class JugadorAleatorio : JugadorAbstractoUno
 {
-    private readonly Random _rng = new Random();
+    private readonly Random _rng;
 
     public JugadorAleatorio(string nombre) : base(nombre)
-    {
-    }
+  {
+        _rng = new Random();
+  }
   public override CartaUnoAbstracta JugarCarta(CartaUnoAbstracta cartaSuperior, IJugadores<CartaUnoAbstracta>? siguienteJugador)
     {
         return JugarCarta(cartaSuperior);
@@ -33,7 +34,7 @@ public class JugadorAleatorio : JugadorAbstractoUno
 
     int idx = _rng.Next(cartasLegales.Count);
     var cartaSeleccionada = cartasLegales[idx];
-    
+
     mano.RemoverCarta(cartaSeleccionada);
     return cartaSeleccionada;
 }

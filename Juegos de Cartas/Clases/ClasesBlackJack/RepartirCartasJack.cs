@@ -11,16 +11,11 @@ public class RepartirCartasJack : IRepartirCartas<ICartaJack>
     private Deck<ICartaJack> _deck;
     public Deck<ICartaJack> Deck
     {
-        get
-        {
-            return _deck;
-        }
+        get { return _deck; }
         set
         {
             if (value == null)
-            {
                 throw new Exception(message: "Deck no puede ser null");
-            }
             _deck = value;
         }
     }

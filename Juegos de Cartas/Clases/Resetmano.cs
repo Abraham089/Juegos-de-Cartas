@@ -5,39 +5,15 @@ namespace Juegos_de_Cartas.Clases;
 
 public abstract class Resetmano<TCarta>: IReinciarMano<TCarta> where TCarta : class
 {
-    protected  IPuntosCalculadora<TCarta> _calculadoraPuntos
-    {
-        get
-        {
-            return _calculadoraPuntos;
-        }
-        private set
-        {
-            if (value == null)
-            {
-                throw new Exception(message: "CalculadoraPuntos no puede ser null");
-            }
-            _calculadoraPuntos = value;
-        }
-    }
-    protected  IEstadosJuego<TCarta> _evaluadorEstados
-    {
-        get
-        {
-            return _evaluadorEstados;
-        }
-        private set
-        {
-            if (value == null)
-            {
-                throw new Exception(message: "EvaluadorEstados no puede ser null");
-            }
-            _evaluadorEstados = value;
-        }
-    }
+    protected IPuntosCalculadora<TCarta> _calculadoraPuntos;
+    protected IEstadosJuego<TCarta> _evaluadorEstados;
 
     public Resetmano(IPuntosCalculadora<TCarta> calculadoraPuntos, IEstadosJuego<TCarta> evaluadorEstados)
     {
+        if (calculadoraPuntos == null)
+            throw new Exception(message: "CalculadoraPuntos no puede ser null");
+        if (evaluadorEstados == null)
+            throw new Exception(message: "EvaluadorEstados no puede ser null");
         _calculadoraPuntos = calculadoraPuntos;
         _evaluadorEstados = evaluadorEstados;
     }
@@ -69,6 +45,5 @@ public abstract class Resetmano<TCarta>: IReinciarMano<TCarta> where TCarta : cl
         return $"[{cartasStr}] = {puntos} puntos{estado}";
     }
 
-     protected abstract string ObtenerEstadoPersonalizado(IList<TCarta> cartas);
-
+    protected abstract string ObtenerEstadoPersonalizado(IList<TCarta> cartas);
 }

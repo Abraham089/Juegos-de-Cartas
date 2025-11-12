@@ -27,7 +27,7 @@ public abstract class CartaUnoAbstracta : ICarta<int>
   public Colores Color
   {
     get { return _color; }
-    init { _color = value; }
+    set { _color = value; }
   }
   public CartaUnoAbstracta(int valor, Colores color)
   {

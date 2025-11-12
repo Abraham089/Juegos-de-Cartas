@@ -5,7 +5,7 @@ using Juegos_de_Cartas.Enumeradores;
 
 namespace Juegos_de_Cartas.Clases.ClasesBlackJack;
 
-public class CartaJack : ICartaJack
+public class CartaJack : ICartaJack, ICarta<int>
 {
     private ValoresCartaJack _valor;
     public ValoresCartaJack Valor
@@ -15,9 +15,24 @@ public class CartaJack : ICartaJack
         {
             if (!Enum.IsDefined(typeof(ValoresCartaJack), value))
             {
-                throw new Exception(message:"Valor de carta no valido");
+                throw new Exception(message: "Valor de carta no valido");
             }
             _valor = value;
+        }
+    }
+
+ 
+ 
+    int ICarta<int>.Valor
+    {
+        get
+        {
+           
+            if (Valor == ValoresCartaJack.As)
+                return 11;
+            if (Valor == ValoresCartaJack.Jota || Valor == ValoresCartaJack.Reina || Valor == ValoresCartaJack.Rey)
+                return 10;
+            return (int)Valor;
         }
     }
     private Figuras _figura;
