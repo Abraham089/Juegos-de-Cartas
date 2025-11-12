@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Clases\ClasesUno\LogicaDeCartas\" />
+    <Folder Include="Clases\Jugadores\" />
   </ItemGroup>
 
 </Project>
