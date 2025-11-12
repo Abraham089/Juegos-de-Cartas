@@ -12,4 +12,6 @@ public interface IDeck<TCarta> where TCarta : class
     void AgregarCartas(IEnumerable<TCarta> cartas);
     void Limpiar();
     IReadOnlyList<TCarta> ObtenerCartas();
+    TCarta SacarCarta();
+    
 }
