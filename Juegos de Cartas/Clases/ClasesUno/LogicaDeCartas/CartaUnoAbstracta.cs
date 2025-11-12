@@ -12,9 +12,9 @@ public abstract class CartaUnoAbstracta : ICarta<int>
     get { return _valor; }
     init
     {
-      if (value <= 0)
+      if (value < 0)
       {
-        throw new Exception("El valor de la carta no puede ser menor o igual 0");
+        throw new Exception("El valor de la carta no puede ser menor a 0");
       }
       if (value > 9)
       {
@@ -33,15 +33,5 @@ public abstract class CartaUnoAbstracta : ICarta<int>
   {
     Valor = valor;
     Color = color;
-  }
-
-  public bool EsCartaJugable(ICarta<int> carta)
-  {
-    throw new NotImplementedException();
-  }
-
-  public string ObtenerDescripcionDeCarta()
-  {
-    throw new NotImplementedException();
   }
 }

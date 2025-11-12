@@ -6,7 +6,4 @@ public interface ICarta<TValueCarta>
 {
     TValueCarta? Valor { get; }
     
-    String ObtenerDescripcionDeCarta();
-
-    bool EsCartaJugable(ICarta<TValueCarta> carta);
 }
