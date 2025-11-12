@@ -109,11 +109,6 @@ public List<ICarta> Cartas
         return carta;
     }
 
-    internal void Barajear()
-    {
-        throw new NotImplementedException();
-    }
-
     public ICarta SacarCarta()
     {
         if (EstaVacio)

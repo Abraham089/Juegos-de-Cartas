@@ -54,25 +54,51 @@ public class JuegoUno : JuegoMain<CartaUnoAbstracta>
 
   public override void IniciarJuego()
   {
-    throw new NotImplementedException();
+    Deck.Bareajear(); 
+    
+    RepartirCartas(7); 
+
+    CartaUnoAbstracta primeraCarta = RobarCartaDelMazo();
+    while (primeraCarta is CartaTrampa) 
+    {
+        primeraCarta = RobarCartaDelMazo(); 
+    }
+    CartasUsadas.AgregarCarta(primeraCarta);
   }
 
+  private void RepartirCartas(int numCartas)
+{
+    for (int i = 0; i < numCartas; i++)
+    {
+        foreach (var jugador in Jugadores)
+        {
+            CartaUnoAbstracta carta = RobarCartaDelMazo();
+            
+            jugador.RecibirCarta(carta);
+        }
+    }
+}
   public static bool SePuedeJugar(CartaUnoAbstracta cartaJugada, CartaUnoAbstracta cartaEncima)
   {
-    bool jugable = true;
-    if (cartaJugada.Color != cartaEncima.Color && cartaJugada.Color != Enumeradores.Colores.Negro)
+    if (cartaJugada.Color == Enumeradores.Colores.Negro)
     {
-      jugable = false;
+      return true;
     }
-    if(cartaJugada is CartaNormal && cartaEncima is CartaNormal)
+
+    if (cartaJugada.Color == cartaEncima.Color)
     {
-      if(cartaJugada.Valor != cartaEncima.Valor)
+      return true;
+    }
+
+    if (cartaJugada is CartaNormal cartaJ && cartaEncima is CartaNormal cartaE)
+    {
+      if (cartaJ.Valor == cartaE.Valor)
       {
-        return false;
+        return true;
       }
     }
 
-    return jugable;
+    return false;
   }
   public void AplicarEfectos(CartaUnoAbstracta carta)
   {
