@@ -69,15 +69,6 @@ public List<ICarta> Cartas
         _cartas.Add(carta);
     }
 
-    public void AgregarCartas(IEnumerable<ICarta> cartas)
-    {
-        if (cartas == null)
-        {
-            throw new Exception(message: "la coleccion de cartas no puede ser nula");
-        }
-        _cartas.AddRange(cartas);
-    }
-
     public void Bareajear()
     {
         for (int i = 0; i < _cartas.Count; i++)

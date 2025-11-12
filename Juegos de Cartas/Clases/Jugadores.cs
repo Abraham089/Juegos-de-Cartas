@@ -7,10 +7,12 @@ using Juegos_de_Cartas.Interfaces;
 
 public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : class
 {
-    public string Nombre {
+    protected string _nombre;
+    public string Nombre
+    {
         get
         {
-            return Nombre;
+            return _nombre;
         }
         protected set
         {
@@ -18,15 +20,16 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
             {
                 throw new Exception(message: "El nombre no puede ser nulo o vacío.");
             }
-            Nombre = value;
+            _nombre = value;
         }
-         }
+    }
 
+    protected IMano<TCarta> _mano;
     public IMano<TCarta> Mano
     {
         get
         {
-            return Mano;
+            return _mano;
         }
         protected set
         {
@@ -34,11 +37,10 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
             {
                 throw new Exception(message: "La mano no puede ser nula.");
             }
-            Mano = value;
+            _mano = value;
         }
     }
 
-    public int Puntos { get; protected set; }
 
     public int VictoriasAcumuladas
     {
@@ -68,21 +70,6 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
         Mano = mano;
     }
     
-  
-    
-
-    public TCarta JugarCarta(TCarta cartaSuperior, IJugadores<TCarta>? siguienteJugador = null)
-    {
-        var random = new Random();
-        return Mano.Cartas[random.Next(Mano.Cartas.Count - 1)];
-    }
-
-   
- 
-    public virtual void NuevaMano()
-    {
-        Mano.Limpiar();
-    }
  
 
     public void RecibirCarta(TCarta carta)
@@ -92,49 +79,5 @@ public abstract class Jugadores<TCarta> : IJugadores<TCarta> where TCarta : clas
             throw new Exception(message: "la carta no puede ser nula");
         }
         Mano.AgregarCarta(carta);
-    }
-
-    public void LimpiarMano()
-    {
-        Mano.Limpiar();
-    }
-
-    public void AgregarVictoria()
-    {
-        VictoriasAcumuladas++;
-    }
-    
-
-    public int CalcularPuntos()
-    {
-        if (Mano == null)
-        {
-            throw new Exception("La mano no puede ser nula al calcular puntos.");
-        }
-      
-        int puntos = 0;
-        foreach (var carta in Mano.Cartas)
-        {
-           
-            var valorProp = carta.GetType().GetProperty("valor");
-            if (valorProp != null)
-            {
-                var valor = valorProp.GetValue(carta);
-                if (valor == null)
-                {
-                    throw new Exception("La propiedad valor de la carta es nula");
-                }
-                puntos += (int)valor;
-            }
-            else
-            {
-                throw new Exception("La carta no tiene una propiedad valor");
-            }
-        }
-        return puntos;
-    }
-    public bool SePaso()
-    {
-        return CalcularPuntos() > 21;
     }
 }
