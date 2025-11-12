@@ -19,4 +19,24 @@ public abstract CartaUnoAbstracta DecidirJugarCartaRobada(CartaUnoAbstracta cart
     if (carta == null) throw new ArgumentNullException(nameof(carta));
     Mano.AgregarCarta(carta);
   }
+
+    public void LimpiarMano()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AgregarVictoria()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int CalcularPuntos()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool SePaso()
+    {
+        throw new NotImplementedException();
+    }
 }

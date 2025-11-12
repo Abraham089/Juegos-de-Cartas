@@ -51,4 +51,5 @@ public abstract class JuegoMain<TCarta> where TCarta : class
     }
   }
   public abstract void HacerJugada();
+  
 }
